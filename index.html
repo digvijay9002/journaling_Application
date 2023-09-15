@@ -10,6 +10,9 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap"
       rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=MuseoModerno&family=Sacramento&display=swap"
+      rel="stylesheet">
   </head>
   <body>
     <section class="dasboard__section">
@@ -42,21 +45,128 @@
 
           <div class="additional__options">
             <img src="./images/align_icon.svg">
-            <img src="./images/add_icon.svg">
+            <button class="add_icon_btn" id="add_icon_btn">
+              <img src="./images/add_icon.svg"></button>
+
             <img src="./images/copy_icon.svg">
           </div>
         </div>
+        <div class="background__image__div">
+          <img src="./images/background_lines.svg" class="background__lines">
+          <div class="two__fixed__container">
+            <div class="first__container">
+              <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+              <div class="post__preview">
+                <div class="pin__image">
+                  <img src="./images/page_pin.svg" class="page__pin">
+                </div>
+                <div class="post_preview_title">
+                  Title Text
+                </div>
+                <div class="post__date">
+                  July 2nd, 2022
+                </div>
 
-        <div class="two__fixed__container">
-          <div class="first__container">
-            A
-          </div>
+                <div class="post__preview__description">
+                  Lorem ipsum dolor sit amet. Aut pariatur dolores eum quod
+                  dolores est molestias earum. Qui quasi Quis sit voluptas
+                  accusamus id iure sequi. Nam maiores explicabo cum sunt sint
+                  sed officiis voluptatum ut galisum cupiditate ea sint...
+                </div>
 
-          <div class="second__container">
-            S
+              </div>
+
+              <div class="post__preview">
+                <div class="pin__image">
+                  <img src="./images/page_pin.svg" class="page__pin">
+                </div>
+                <div class="post_preview_title">
+                  Title Text
+                </div>
+                <div class="post__date">
+                  July 2nd, 2022
+                </div>
+
+                <div class="post__preview__description">
+                  Lorem ipsum dolor sit amet. Aut pariatur dolores eum quod
+                  dolores est molestias earum. Qui quasi Quis sit voluptas
+                  accusamus id iure sequi. Nam maiores explicabo cum sunt sint
+                  sed officiis voluptatum ut galisum cupiditate ea sint...
+                </div>
+
+              </div>
+
+              <div class="post__preview">
+                <div class="pin__image">
+                  <img src="./images/page_pin.svg" class="page__pin">
+                </div>
+                <div class="post_preview_title">
+                  Title Text
+                </div>
+                <div class="post__date">
+                  July 2nd, 2022
+                </div>
+
+                <div class="post__preview__description">
+                  Lorem ipsum dolor sit amet. Aut pariatur dolores eum quod
+                  dolores est molestias earum. Qui quasi Quis sit voluptas
+                  accusamus id iure sequi. Nam maiores explicabo cum sunt sint
+                  sed officiis voluptatum ut galisum cupiditate ea sint...
+                </div>
+
+              </div>
+
+              <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+            </div>
+
+            <div class="second__container">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic
+              quidem
+              iusto laboriosam voluptatem nihil illum accusamus, magnam, porro
+              voluptates blanditiis vitae. Assumenda odio recusandae eos. Quam
+              possimus ex facere mollitia?Lorem ipsum dolor sit amet
+              consectetur
+              adipisicing elit. Dolores animi tempore nisi aliquid quam
+              accusamus
+              reiciendis recusandae dolore incidunt laboriosam vero autem
+              modi,
+              id
+              blanditiis repellendus voluptatem consequuntur nam commodi?
+            </div>
           </div>
         </div>
       </section>
+    </div>
+    <div class="add_post_modal" id="add_post_modal">
+      <div class="modal_content">
+        <div class="form_container">
+          <div class="create__new__post__title">
+            Create new post
+          </div>
+          <div class="post__details_container">
+            <form class="post__details__form">
+              <input type="text" id="post__title" class="post__title"
+                placeholder="Post title" autocomplete="off" name="title">
+
+              <textarea type="text" id="post__description"
+                class="post__description" name="description"
+                placeholder="Share your thoughts..."></textarea>
+
+              <div class="submit__btn__wrapper">
+
+                <div class="hidden__div">
+                  <input type="file" id="choose_file" class="choose__file"
+                    placeholder="Choose file" title=" " name="file" />
+                </div>
+
+                <button type="submit" id="post_btn">
+                  Share
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
 
       <script type="module" src="./js/main.js"></script>
     </body>

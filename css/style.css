@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=MuseoModerno&family=Sacramento&display=swap");
 * {
   margin: 0;
   box-sizing: border-box;
@@ -35,7 +36,7 @@ nav {
   align-items: center;
   max-height: 67px;
   height: 67px;
-  margin: 14px 0px;
+  /* margin: 14px 0px; */
   background: #fdfbff;
   box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.06);
 
@@ -107,17 +108,190 @@ nav {
 .two__fixed__container {
   display: flex;
   justify-content: space-between;
-  padding: 26px 107px;
+  padding: 54px 107px;
+  height: 100%;
+  gap: 25px;
 }
 .first__container {
-  display: flex;
-  background-color: rgba(71, 46, 131, 0.875);
-  height: calc(100vh - 228px);
-  overflow-y: scroll;
+  display: grid;
+  grid-template-rows: auto;
+  width: 40%;
+  max-height: calc(100vh - 228px);
+  overflow-y: auto;
+  /* overflow: hidden; */
+  z-index: 1;
+  row-gap: 22px;
 }
 .second__container {
+  width: 60%;
   display: flex;
   background-color: yellow;
-  height: calc(100vh - 228px);
-  overflow-y: scroll;
+  max-height: calc(100vh - 228px);
+
+  overflow: hidden;
+  overflow-y: auto;
+}
+.background__lines {
+  position: absolute;
+  z-index: -1;
+}
+
+.add_icon_btn {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.add_post_modal {
+  display: none; /* Hidden by default */
+  position: absolute; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
+}
+.modal_content {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+.form_container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.05);
+  width: 747px;
+  height: 733px;
+  flex-shrink: 0;
+}
+.create__new__post__title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 81px;
+  font-family: "Sacramento", cursive;
+  color: #000;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  flex-wrap: wrap;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+.post__details__form {
+  height: 100%;
+  padding: 41px 52px;
+  display: flex;
+  flex-direction: column;
+}
+
+.post__title::placeholder {
+  color: #5a4282;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  line-height: normal;
+}
+.post__details_container {
+  height: 100%;
+}
+
+.post__title {
+  outline: none;
+  color: #5a4282;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  width: 100%;
+  /* box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12); */
+  border: none;
+}
+
+.post__description {
+  word-break: break-word;
+  outline: none;
+  color: #5a4282 !important;
+  margin-top: 30px;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  width: 100%;
+  height: 100%;
+  /* box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12); */
+  border: none;
+  resize: none;
+}
+
+.post__description::placeholder {
+  color: #5a4282;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  line-height: normal;
+}
+
+/* .hidden__div {
+  overflow: hidden;
+  width: 85px;
+} */
+input[type="file"] {
+  color: transparent;
+}
+.submit__btn__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.post__preview {
+  position: relative;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 3px 4px 4px 2px rgba(0, 0, 0, 0.06);
+  padding: 33px 32px;
+}
+
+.post__preview:hover {
+  border-right: 10px solid rgba(102, 95, 230, 0.49);
+}
+.post_preview_title {
+  color: #000;
+  font-family: Sacramento;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.post__date {
+  color: #5a4282;
+  font-family: Open Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+.post__preview__description {
+  max-height: 120px;
+  color: #000;
+  font-family: Open Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  padding: 14px 0px;
+}
+.pin__image {
+  position: absolute;
+  left: -10px;
 }
