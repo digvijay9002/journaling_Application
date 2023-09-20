@@ -1,0 +1,23 @@
+<svg width="28" height="27" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="28" height="27" fill="#D9D9D9"/>
+<g id="Navbar" clip-path="url(#clip0_0_1)">
+<rect width="1440" height="919" transform="translate(-75 -326)" fill="#FDFBFF"/>
+<rect id="Rectangle 15" x="-75" y="-326" width="1440" height="919" fill="black" fill-opacity="0.42"/>
+<rect id="Rectangle 16" x="-113" y="-326" width="387" height="921" rx="38" fill="white"/>
+<g id="Group 18">
+<g id="Group 16">
+<g id="fa:sticky-note-o" clip-path="url(#clip1_0_1)">
+<path id="Vector" d="M25.5208 20.25H21V24.6094C21.3524 24.4922 21.6016 24.3633 21.7474 24.2227L25.1198 20.9707C25.2656 20.8301 25.3993 20.5898 25.5208 20.25ZM20.4167 18H25.6667V2.25H2.33333V24.75H18.6667V19.6875C18.6667 19.2188 18.8368 18.8203 19.1771 18.4922C19.5174 18.1641 19.9306 18 20.4167 18ZM28 1.6875V19.6875C28 20.1562 27.8785 20.6719 27.6354 21.2344C27.3924 21.7969 27.1007 22.2422 26.7604 22.5703L23.4062 25.8047C23.066 26.1328 22.6042 26.4141 22.0208 26.6484C21.4375 26.8828 20.9028 27 20.4167 27H1.75C1.26389 27 0.850694 26.8359 0.510417 26.5078C0.170139 26.1797 0 25.7812 0 25.3125V1.6875C0 1.21875 0.170139 0.820312 0.510417 0.492188C0.850694 0.164063 1.26389 0 1.75 0H26.25C26.7361 0 27.1493 0.164063 27.4896 0.492188C27.8299 0.820312 28 1.21875 28 1.6875Z" fill="#5A4282"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_1">
+<rect width="1440" height="919" fill="white" transform="translate(-75 -326)"/>
+</clipPath>
+<clipPath id="clip1_0_1">
+<rect width="28" height="27" fill="white"/>
+</clipPath>
+</defs>
+</svg>
