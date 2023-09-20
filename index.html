@@ -54,12 +54,13 @@
         <div class="background__image__div">
           <img src="./images/background_lines.svg" class="background__lines">
           <div class="two__fixed__container">
-            <div class="first__container">
+            <div class="first__container example" id="post__preview__wrapper">
               <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-              <div class="post__preview">
+              <!-- <div class="post__preview">
                 <div class="pin__image">
                   <img src="./images/page_pin.svg" class="page__pin">
                 </div>
+                <div></div>
                 <div class="post_preview_title">
                   Title Text
                 </div>
@@ -74,100 +75,89 @@
                   sed officiis voluptatum ut galisum cupiditate ea sint...
                 </div>
 
-              </div>
-
-              <div class="post__preview">
-                <div class="pin__image">
-                  <img src="./images/page_pin.svg" class="page__pin">
-                </div>
-                <div class="post_preview_title">
-                  Title Text
-                </div>
-                <div class="post__date">
-                  July 2nd, 2022
-                </div>
-
-                <div class="post__preview__description">
-                  Lorem ipsum dolor sit amet. Aut pariatur dolores eum quod
-                  dolores est molestias earum. Qui quasi Quis sit voluptas
-                  accusamus id iure sequi. Nam maiores explicabo cum sunt sint
-                  sed officiis voluptatum ut galisum cupiditate ea sint...
-                </div>
-
-              </div>
-
-              <div class="post__preview">
-                <div class="pin__image">
-                  <img src="./images/page_pin.svg" class="page__pin">
-                </div>
-                <div class="post_preview_title">
-                  Title Text
-                </div>
-                <div class="post__date">
-                  July 2nd, 2022
-                </div>
-
-                <div class="post__preview__description">
-                  Lorem ipsum dolor sit amet. Aut pariatur dolores eum quod
-                  dolores est molestias earum. Qui quasi Quis sit voluptas
-                  accusamus id iure sequi. Nam maiores explicabo cum sunt sint
-                  sed officiis voluptatum ut galisum cupiditate ea sint...
-                </div>
-
-              </div>
+              </div> -->
 
               <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
             </div>
 
             <div class="second__container">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic
-              quidem
-              iusto laboriosam voluptatem nihil illum accusamus, magnam, porro
-              voluptates blanditiis vitae. Assumenda odio recusandae eos. Quam
-              possimus ex facere mollitia?Lorem ipsum dolor sit amet
-              consectetur
-              adipisicing elit. Dolores animi tempore nisi aliquid quam
-              accusamus
-              reiciendis recusandae dolore incidunt laboriosam vero autem
-              modi,
-              id
-              blanditiis repellendus voluptatem consequuntur nam commodi?
+              <div class="first__div__grid" onclick="selectPost()"></div>
+              <div class="second__div__grid"></div>
+              <div class="third__div__grid"></div>
+              <div class="full__description">
+
+                <span class="full__description__title">
+                  TitleText
+                </span>
+
+                <span class="detailed__description">
+                  Lorem ipsum dolor sit amet. Et deleniti amet qui accusantium
+                  autem et nulla voluptas et similique adipisci. Quo cupiditate
+                  deserunt qui maiores molestiae qui voluptatem accusamus quo
+                  neque unde aut enim quia sit fugit totam. Id repellat
+                  voluptatem
+                  quo laudantium dolor quo natus dicta. Qui quidem alias est
+                  dolor
+                  aliquam qui iusto galisum ut harum deleniti.
+                  Ut harum quia ab dolorem placeat 33 molestiae laboriosam sed
+                  inventore tenetur. Vel laudantium voluptatibus et odio
+                  voluptates eum voluptates iusto vel facere laudantium? Ea
+                  necessitatibus beatae et temporibus nobis id quaerat maxime
+                  nam
+                  consequatur voluptas rem dolor voluptatem? Ut reiciendis
+                  voluptatum et impedit dignissimos sit sequi quia.
+
+                  Aut nemo rerum et inventore labore vel corporis voluptas in
+                  consequuntur voluptas. Et saepe voluptate sed commodi magni
+                  qui
+                  voluptatem delectus et odio dolor aut soluta molestiae. Aut
+                  pariatur expedita quo reprehenderit similique qui placeat
+                  itaque. Qui consequatur cupiditate ut galisum maxime non
+                  consectetur mollitia et quia consequuntur.
+                  Qui iste culpa non laudantium quae eos voluptatem expedita qui
+                  nesciunt vero ut esse sint sed culpa sint. Qui reprehenderit
+                  minima est aliquid harum sit omnis nihil. Et repellendus
+                  molestias cum maiores alias et quia aliquid aut consequatur
+                  consequatur. galisum ut harum deleniti.
+                  Ut harum quia ab dolorem placeat 33 molestiae laboriosam sed
+                  inventore tenetur. Vel laudantium
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="add_post_modal" id="add_post_modal">
+        <div class="modal_content">
+          <div class="form_container">
+            <div class="create__new__post__title">
+              Create new post
+            </div>
+            <div class="post__details_container">
+              <form class="post__details__form">
+                <input type="text" id="post__title" class="post__title"
+                  placeholder="Post title" autocomplete="off" name="title">
+
+                <textarea type="text" id="post__description"
+                  class="post__description" name="description"
+                  placeholder="Share your thoughts..."></textarea>
+
+                <div class="submit__btn__wrapper">
+
+                  <div class="hidden__div">
+                    <input type="file" id="choose_file" class="choose__file"
+                      placeholder="Choose file" title=" " name="file" />
+                  </div>
+
+                  <button type="submit" id="post_btn">
+                    Share
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </section>
-    </div>
-    <div class="add_post_modal" id="add_post_modal">
-      <div class="modal_content">
-        <div class="form_container">
-          <div class="create__new__post__title">
-            Create new post
-          </div>
-          <div class="post__details_container">
-            <form class="post__details__form">
-              <input type="text" id="post__title" class="post__title"
-                placeholder="Post title" autocomplete="off" name="title">
-
-              <textarea type="text" id="post__description"
-                class="post__description" name="description"
-                placeholder="Share your thoughts..."></textarea>
-
-              <div class="submit__btn__wrapper">
-
-                <div class="hidden__div">
-                  <input type="file" id="choose_file" class="choose__file"
-                    placeholder="Choose file" title=" " name="file" />
-                </div>
-
-                <button type="submit" id="post_btn">
-                  Share
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <script type="module" src="./js/main.js"></script>
-    </body>
-  </html>
+        <script type="module" src="./js/main.js"></script>
+      </body>
+    </html>

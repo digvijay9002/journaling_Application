@@ -1,74 +1,99 @@
 
+let posts = [];
 
 
 
 var btn = document.querySelector("#add_icon_btn")
 var postBtn = document.querySelector(".post__details__form");
 
-
+function selectPost() {
+  console.log("event", "HII");
+}
 btn.addEventListener("click", () => {
-    var modal = document.querySelector("#add_post_modal");
+  var modal = document.querySelector("#add_post_modal");
 
-    modal.style.display = "flex";
+  modal.style.display = "flex";
 
-    window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
     }
+  }
 })
 
 
 
-const posts = [];
 
 postBtn.addEventListener("submit", (event) => {
-    event.preventDefault();
-    console.log("events", event)
-    const postData = new FormData(event.target);
-    console.log(event.target)
-    console.log("Yo", [...postData]);
-    const post = [...postData].reduce((acc, cur) => {
+  event.preventDefault();
+  const postData = new FormData(event.target);
+  const post = [...postData].reduce((acc, cur) => {
+    acc[cur[0]] = cur[1]
+    return acc;
+  }, { date: new Date() })
 
-        console.log(cur)
-        acc[cur[0]] = cur[1]
-        return acc;
-    }, {})
 
-    posts.push(post);
-    localStorage.setItem("posts", JSON.stringify(posts))
+
+
+  if (showPost) {
+    posts = [...showPost]
+  } else {
+    localStorage.setItem("posts", JSON.stringify([]))
+  }
+  let items = JSON.parse(localStorage.getItem("posts"))
+  posts = [...items, post]
+  localStorage.setItem("posts", JSON.stringify(posts))
 });
 
 
-window.addEventListener("load", (event) => {
+const showPost = JSON.parse(localStorage.getItem("posts"));
 
-    if (localStorage.getItem("posts")) {
-        console.log("All posts:", JSON.parse(localStorage.getItem("posts")))
 
-    }
+let addPostWrapper = document.getElementById("post__preview__wrapper");
+
+showPost.forEach((showPost, key) => {
+  addPostWrapper.insertAdjacentHTML("beforeend", `
+        <div class="post__preview" data-id=${key} onclick="selectPost" >
+                <div class="pin__image">
+                  <img src="./images/page_pin.svg" class="page__pin">
+                </div>
+                <div></div>
+                <div class="post_preview_title">
+                  ${showPost.title}
+                </div>
+                <div class="post__date">
+                  July 2nd, 2022
+                </div>
+
+                <div class="post__preview__description">
+                 ${showPost.description}
+                </div>
+
+              </div>
+        `);
 });
 
 
-let file = document.querySelector(".choose__file");
+// let file = document.querySelector(".choose__file");
 
-file.addEventListener("change", (event) => {
+// file.addEventListener("change", (event) => {
 
-    const selectedFile = event.target.files[0];
+//     const selectedFile = event.target.files[0];
 
-    console.log(selectedFile)
+//     console.log(selectedFile)
 
-    if (selectedFile) {
-        const reader = new FileReader();
+//     if (selectedFile) {
+//         const reader = new FileReader();
 
-        reader.onload = (e) => {
+//         reader.onload = (e) => {
 
-            console.log("D")
+//             console.log("D")
 
-            const imageDataUrl = e.target.result;
+//             const imageDataUrl = e.target.result;
 
-        }
-    }
-})
+//         }
+//     }
+// })
 
 
 
