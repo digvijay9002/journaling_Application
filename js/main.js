@@ -3,6 +3,8 @@ let posts = [];
 var btn = document.querySelector("#add_icon_btn");
 var postBtn = document.querySelector(".post__details__form");
 
+let showPosts = JSON.parse(localStorage.getItem("posts"));
+
 btn.addEventListener("click", () => {
   var modal = document.querySelector("#add_post_modal");
 
@@ -45,8 +47,8 @@ postBtn.addEventListener("submit", (event) => {
     }
   );
 
-  if (showPost) {
-    posts = [...showPost];
+  if (showPosts) {
+    posts = [...showPosts];
   } else {
     localStorage.setItem("posts", JSON.stringify([]));
   }
@@ -55,14 +57,13 @@ postBtn.addEventListener("submit", (event) => {
   localStorage.setItem("posts", JSON.stringify(posts));
 });
 
-let showPost = JSON.parse(localStorage.getItem("posts"));
-
-let addPostWrapper = document.getElementById("post__preview__wrapper");
-
-showPost.forEach((showPost, key) => {
-  addPostWrapper.insertAdjacentHTML(
-    "beforeend",
-    `
+const displayPost = () => {
+  let addPostWrapper = document.getElementById("post__preview__wrapper");
+  addPostWrapper.innerHTML = "";
+  showPosts.forEach((showPost, key) => {
+    addPostWrapper.insertAdjacentHTML(
+      "beforeend",
+      `
   <div class="post__preview pointer" data-id=${key} onclick="selectPost(${key})" >
   <div class="pin__image">
   <img src="./images/page_pin.svg" class="page__pin">
@@ -88,58 +89,38 @@ ${showPost.date}
   
   </div>
   `
-  );
-});
+    );
+  });
+};
 
-let fullDescription = document.getElementById("full__description");
+displayPost();
 
-function selectPost(key) {
-  fullDescription.innerHTML = "";
-  fullDescription.insertAdjacentHTML(
-    "beforeend",
-    `
+const deletePost = (key) => {
+  showPosts = showPosts.filter((_item, index) => {
+    return index !== key;
+  });
+
+  localStorage.setItem("posts", JSON.stringify(showPosts));
+  displayPost();
+};
+
+const selectPost = (key) => {
+  let fullDescription = document.getElementById("full__description");
+  if (showPosts && showPosts[key]) {
+    fullDescription.innerHTML = "";
+    fullDescription.insertAdjacentHTML(
+      "beforeend",
+      `
   
   <span class="full__description__title">
-  ${showPost[key].title}
+  ${showPosts[key].title}
   </span>
   
   <span class="detailed__description example">
-  ${showPost[key].description}
+  ${showPosts[key].description}
   </span>
   `
-  );
-}
-
-
-closeBtn = document.querySelector(".close__icon__div");
-
-closeBtn.addEventListener("click", () => {
-
-
-  console.log("You have Clicked Delete button")
-
-
-})
-
-function deletePost(key) {
-
-  console.log("Full array:", showPost)
-  console.log("delete this item:", key)
-
-
-  showPost = showPost.filter((_item,index) => {
-    console.log(showPost);
-    return index !== key;
-
-
-
-  })
-
-  localStorage.setItem('posts', JSON.stringify(showPost));
-
-  let showPost = JSON.parse(localStorage.getItem("posts"));
-
-
-
-
-}
+    );
+  } else {
+  }
+};
