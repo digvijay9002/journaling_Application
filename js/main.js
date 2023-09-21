@@ -95,15 +95,6 @@ ${showPost.date}
 
 displayPost();
 
-const deletePost = (key) => {
-  showPosts = showPosts.filter((_item, index) => {
-    return index !== key;
-  });
-
-  localStorage.setItem("posts", JSON.stringify(showPosts));
-  displayPost();
-};
-
 const selectPost = (key) => {
   let fullDescription = document.getElementById("full__description");
   if (showPosts && showPosts[key]) {
@@ -122,5 +113,19 @@ const selectPost = (key) => {
   `
     );
   } else {
+    fullDescription.innerHTML = "";
   }
 };
+
+selectPost();
+
+const deletePost = (key) => {
+  showPosts = showPosts.filter((_item, index) => {
+    return index !== key;
+  });
+
+  localStorage.setItem("posts", JSON.stringify(showPosts));
+  displayPost();
+};
+
+
