@@ -1,19 +1,10 @@
 let posts = [];
-
 var btn = document.querySelector("#add_icon_btn");
 var postBtn = document.querySelector(".post__details__form");
-
-let showPosts = JSON.parse(localStorage.getItem("posts"));
-if (showPosts) {
-  posts = [...showPosts];
-
-} else {
-  localStorage.setItem("posts", JSON.stringify([]));
-}
-
 let imageDiv = document.querySelector(".image__preview");
 
 
+let menuBtn = document.querySelector("#menu__icon");
 btn.addEventListener("click", () => {
   var modal = document.querySelector("#add_post_modal");
 
@@ -26,7 +17,6 @@ btn.addEventListener("click", () => {
   };
 });
 
-let menuBtn = document.querySelector("#menu__icon");
 
 menuBtn.addEventListener("click", () => {
   document.getElementById("full__menu").style.display = "flex";
@@ -58,89 +48,80 @@ postBtn.addEventListener("submit", (event) => {
   );
 
   const { date, title, description } = post;
-  localStorage.setItem("title", title);
-  localStorage.setItem("description", description);
-  localStorage.setItem("date", date);
-
-
-  let items = JSON.parse(localStorage.getItem("posts"));
-
-  posts = [...items, post];
-
-  localStorage.setItem("posts", JSON.stringify(posts));
   storePostInIndexedDB(imageData, title, description, date);
 });
+
 
 const displayPost = () => {
   let addPostWrapper = document.getElementById("post__preview__wrapper");
   addPostWrapper.innerHTML = "";
-  showPosts.forEach((showPost, key) => {
-    addPostWrapper.insertAdjacentHTML(
-      "beforeend",
-      `
-  <div class="post__preview pointer" data-id=${key} onclick="selectPost(${key})" >
-  <div class="pin__image">
-  <img src="./images/page_pin.svg" class="page__pin">
-  </div>
-  <div></div>
-  <div class="post_preview_title">
-    <div>
-      ${showPost.title}
-    </div>
-    <div class= "close__icon__div">
-      <img src="./images/close_icon.svg" class= "close__icon" data-id=${key} onclick="deletePost(${key})">
-    </div>  
-  </div>
-  <div class="post__date">
-  
-${showPost.date}
-  </div>
-  
-  <div class="post__preview__description" id="post__preview__description">
-  ${showPost.description}
-  
-  </div>
-  
-  </div>
-  `
-    );
-  });
+
+  // Open the IndexedDB
+  const request = window.indexedDB.open("Images", 1);
+
+  request.onsuccess = (event) => {
+
+    const db = event.target.result;
+    const transaction = db.transaction(["posts"], "readonly");
+    const objectStore = transaction.objectStore("posts");
+
+    // Create a cursor to iterate through the object store
+    const cursorRequest = objectStore.openCursor();
+
+    cursorRequest.onsuccess = (event) => {
+      const cursor = event.target.result;
+
+      if (cursor) {
+        const key = cursor.key;
+        const showPost = cursor.value;
+
+        // Insert the post data into the HTML
+        addPostWrapper.insertAdjacentHTML(
+          "beforeend",
+          `
+          <div class="post__preview pointer" data-id=${key} onclick="selectPost(${key})" >
+            <div class="pin__image">
+              <img src="./images/page_pin.svg" class="page__pin">
+            </div>
+            <div></div>
+            <div class="post_preview_title">
+              <div>
+                ${showPost.title}
+              </div>
+              <div class= "close__icon__div">
+                <img src="./images/close_icon.svg" class= "close__icon" data-id=${key} onclick="deletePost(${key})">
+              </div>  
+            </div>
+            <div class="post__date">
+              ${showPost.date}
+            </div>
+            <div class="post__preview__description" id="post__preview__description">
+              ${showPost.description}
+            </div>
+          </div>
+        `
+        );
+
+        // Move to the next cursor item
+        cursor.continue();
+      }
+    };
+
+    cursorRequest.onerror = (error) => {
+      console.error("Error iterating through IndexedDB:", error);
+    };
+  };
+
+  request.onerror = (error) => {
+    console.error("Error opening IndexedDB:", error);
+  };
 };
 
+// Call the displayPost function to display data from IndexedDB
 displayPost();
 
-let fullDescription = document.getElementById("full__description");
 
-const selectPost = (key) => {
-  if (showPosts && showPosts[key]) {
-    fullDescription.innerHTML = "";
-    fullDescription.insertAdjacentHTML(
-      "beforeend",
-      `
-  
-  <span class="full__description__title">
-  ${showPosts[key].title}
-  </span>
-  
-  <span class="detailed__description example">
-  ${showPosts[key].description}
-  </span>
-  `
-    );
-    getAllDataFromIndexedDB(key, post => {
-      const imgElement = document.createElement("img");
-      console.log(post)
-      imgElement.src = post.base64Image;
-      fullDescription.appendChild(imgElement);
-    });
-  }
-  else {
-    fullDescription.innerHTML = "";
-  }
-};
-
-// Function to retrieve the image data from IndexedDB
-const getAllDataFromIndexedDB = (postId, callback) => {
+const getSelectedDataFromIndexedDB = (params, callback) => {
   const request = window.indexedDB.open("Images", 1);
 
   request.onsuccess = (event) => {
@@ -148,7 +129,7 @@ const getAllDataFromIndexedDB = (postId, callback) => {
     const transaction = db.transaction(["posts"], "readonly");
     const objectStore = transaction.objectStore("posts");
 
-    const getRequest = objectStore.get(postId);
+    const getRequest = objectStore.getAll();
 
     getRequest.onsuccess = () => {
       const post = getRequest.result;
@@ -169,7 +150,36 @@ const getAllDataFromIndexedDB = (postId, callback) => {
   };
 };
 
+let fullDescription = document.getElementById("full__description");
+
+const selectPost = (key) => {
+  getSelectedDataFromIndexedDB({ postId: key }, (posts) => {
+    if (posts && posts.length > key) {
+      const post = posts[key];
+      fullDescription.innerHTML = "";
+      fullDescription.insertAdjacentHTML(
+        "beforeend",
+        `
+        <span class="full__description__title">
+        ${post.title}
+        </span>
+        
+        <span class="detailed__description example">
+        ${post.description}
+        </span>
+        `
+      );
+    } else {
+      fullDescription.innerHTML = "";
+    }
+  });
+};
+
+
+
 selectPost();
+// Function to retrieve the image data from IndexedDB
+
 
 const fileInput = document.querySelector("#img-input");
 const previewImage = document.querySelector(".image__preview");
@@ -185,8 +195,7 @@ fileInput.addEventListener("change", () => {
 
   fr.addEventListener("load", () => {
     imageData = fr.result;
-    console.log(imageData)
-    // imageData = url
+
 
     const prevImg = document.getElementById("img-from-local-storage")
     prevImg.src = imageData;
@@ -224,12 +233,10 @@ const deletePostFromIndexedDB = (key) => {
 
     // Handle the success of deleting the post
     deleteRequest.onsuccess = () => {
-      console.log(`Post with key ${key} deleted successfully from IndexedDB`);
     };
 
     // Commit the transaction
     transaction.oncomplete = () => {
-      console.log("Transaction completed successfully");
       db.close();
     };
 
@@ -270,12 +277,12 @@ const storePostInIndexedDB = (imageData, title, description, date) => {
 
       // Handle the success of adding the post
       requestAdd.onsuccess = (event) => {
-        console.log("Post added successfully with ID:", event.target.result);
+
       };
 
       // Commit the transaction
       transaction.oncomplete = () => {
-        console.log("Transaction completed successfully");
+
         db.close();
       };
 
