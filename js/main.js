@@ -57,19 +57,18 @@ postBtn.addEventListener("submit", (event) => {
     }
   );
 
-
-
-
-  const { title, description } = post;
+  const { date, title, description } = post;
   localStorage.setItem("title", title);
   localStorage.setItem("description", description);
+  localStorage.setItem("date", date);
+
 
   let items = JSON.parse(localStorage.getItem("posts"));
 
   posts = [...items, post];
 
   localStorage.setItem("posts", JSON.stringify(posts));
-  storePostInIndexedDB(imageData, title, description);
+  storePostInIndexedDB(imageData, title, description, date);
 });
 
 const displayPost = () => {
@@ -244,7 +243,7 @@ const deletePostFromIndexedDB = (key) => {
   };
 };
 
-const storePostInIndexedDB = (imageData, title, description) => {
+const storePostInIndexedDB = (imageData, title, description, date) => {
   // Open the database
   const request = window.indexedDB.open("Images", 1);
 
@@ -266,7 +265,7 @@ const storePostInIndexedDB = (imageData, title, description) => {
       const nextKey = cursor ? cursor.key + 1 : 0; // Calculate the next key
 
       // Add the base64 encoded image, title, and description with the next available key
-      const requestAdd = objectStore.add({ id: nextKey, base64Image: imageData, title, description });
+      const requestAdd = objectStore.add({ id: nextKey, base64Image: imageData, title, description, date });
 
       // Handle the success of adding the post
       requestAdd.onsuccess = (event) => {
