@@ -57,15 +57,19 @@ postBtn.addEventListener("submit", (event) => {
     }
   );
 
-  storePostInIndexedDB(imageData, 'posts');
 
 
+
+  const { title, description } = post;
+  localStorage.setItem("title", title);
+  localStorage.setItem("description", description);
 
   let items = JSON.parse(localStorage.getItem("posts"));
 
   posts = [...items, post];
 
   localStorage.setItem("posts", JSON.stringify(posts));
+  storePostInIndexedDB(imageData, title, description);
 });
 
 const displayPost = () => {
@@ -123,9 +127,46 @@ const selectPost = (key) => {
   </span>
   `
     );
-  } else {
+    getImageFromIndexedDB(key, (imageData) => {
+      const imgElement = document.createElement("img");
+      imgElement.src = imageData;
+      fullDescription.appendChild(imgElement);
+    });
+  }
+  else {
     fullDescription.innerHTML = "";
   }
+};
+
+// Function to retrieve the image data from IndexedDB
+const getImageFromIndexedDB = (postId, callback) => {
+  const request = window.indexedDB.open("Images", 1);
+
+  request.onsuccess = (event) => {
+    const db = event.target.result;
+    const transaction = db.transaction(["posts"], "readonly");
+    const objectStore = transaction.objectStore("posts");
+
+    const getRequest = objectStore.get(postId);
+
+    getRequest.onsuccess = () => {
+      const post = getRequest.result;
+      if (post) {
+        const imageData = post.base64Image;
+        callback(imageData);
+      } else {
+        console.error("Post not found in IndexedDB");
+      }
+    };
+
+    getRequest.onerror = (error) => {
+      console.error("Error getting image data from IndexedDB:", error);
+    };
+  };
+
+  request.onerror = (error) => {
+    console.error("Error opening database:", error);
+  };
 };
 
 selectPost();
@@ -160,12 +201,11 @@ const deletePost = (key) => {
   });
 
   localStorage.setItem("posts", JSON.stringify(showPosts));
+  deletePostFromIndexedDB(key);
   displayPost();
 };
 
-
-
-const storePostInIndexedDB = (imageData) => {
+const deletePostFromIndexedDB = (key) => {
   // Open the database
   const request = window.indexedDB.open("Images", 1);
 
@@ -179,8 +219,13 @@ const storePostInIndexedDB = (imageData) => {
     // Get the object store
     const objectStore = transaction.objectStore('posts');
 
-    // Add the base64 encoded image to the object store
-    objectStore.add({ base64Image: imageData });
+    // Delete the entry with the specified key
+    const deleteRequest = objectStore.delete(key);
+
+    // Handle the success of deleting the post
+    deleteRequest.onsuccess = () => {
+      console.log(`Post with key ${key} deleted successfully from IndexedDB`);
+    };
 
     // Commit the transaction
     transaction.oncomplete = () => {
@@ -190,6 +235,53 @@ const storePostInIndexedDB = (imageData) => {
 
     transaction.onerror = (error) => {
       console.error("Transaction error:", error);
+    };
+  };
+
+  // Handle errors when opening the database
+  request.onerror = (error) => {
+    console.error("Error opening database:", error);
+  };
+};
+
+const storePostInIndexedDB = (imageData, title, description) => {
+  // Open the database
+  const request = window.indexedDB.open("Images", 1);
+
+  // Handle successful database open
+  request.onsuccess = (event) => {
+    const db = event.target.result;
+
+    // Create a new transaction
+    const transaction = db.transaction(['posts'], 'readwrite');
+
+    // Get the object store
+    const objectStore = transaction.objectStore('posts');
+
+    // Get the current highest key in the object store
+    const getRequest = objectStore.openCursor(null, 'prev');
+
+    getRequest.onsuccess = () => {
+      const cursor = getRequest.result;
+      const nextKey = cursor ? cursor.key + 1 : 0; // Calculate the next key
+
+      // Add the base64 encoded image, title, and description with the next available key
+      const requestAdd = objectStore.add({ id: nextKey, base64Image: imageData, title, description });
+
+      // Handle the success of adding the post
+      requestAdd.onsuccess = (event) => {
+        console.log("Post added successfully with ID:", event.target.result);
+      };
+
+      // Commit the transaction
+      transaction.oncomplete = () => {
+        console.log("Transaction completed successfully");
+        db.close();
+      };
+
+      transaction.onerror = (error) => {
+        console.error("Transaction error:", error);
+      };
     };
   };
 
@@ -208,3 +300,4 @@ const storePostInIndexedDB = (imageData) => {
     }
   };
 };
+
