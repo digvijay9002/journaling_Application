@@ -4,11 +4,20 @@ var btn = document.querySelector("#add_icon_btn");
 var postBtn = document.querySelector(".post__details__form");
 
 let showPosts = JSON.parse(localStorage.getItem("posts"));
+if (showPosts) {
+  posts = [...showPosts];
+
+} else {
+  localStorage.setItem("posts", JSON.stringify([]));
+}
+
+let imageDiv = document.querySelector(".image__preview");
+
 
 btn.addEventListener("click", () => {
   var modal = document.querySelector("#add_post_modal");
 
-  modal.style.display = "flex";
+  modal.style.display = "grid";
 
   window.onclick = function (event) {
     if (event.target == modal) {
@@ -30,15 +39,16 @@ menuBtn.addEventListener("click", () => {
 });
 
 postBtn.addEventListener("submit", (event) => {
-  // event.preventDefault();
-  const postData = new FormData(event.target);
+  event.preventDefault();
 
+  const postData = new FormData(event.target);
   const post = [...postData].reduce(
     (acc, cur) => {
       acc[cur[0]] = cur[1];
       return acc;
     },
     {
+      image: imageData,
       date: new Date().toLocaleDateString("en-us", {
         year: "numeric",
         day: "numeric",
@@ -47,13 +57,14 @@ postBtn.addEventListener("submit", (event) => {
     }
   );
 
-  if (showPosts) {
-    posts = [...showPosts];
-  } else {
-    localStorage.setItem("posts", JSON.stringify([]));
-  }
+  storePostInIndexedDB(imageData, 'posts');
+
+
+
   let items = JSON.parse(localStorage.getItem("posts"));
+
   posts = [...items, post];
+
   localStorage.setItem("posts", JSON.stringify(posts));
 });
 
@@ -119,6 +130,30 @@ const selectPost = (key) => {
 
 selectPost();
 
+const fileInput = document.querySelector("#img-input");
+const previewImage = document.querySelector(".image__preview");
+
+
+var imageData;
+
+fileInput.addEventListener("change", () => {
+
+  const fr = new FileReader();
+
+  fr.readAsDataURL(fileInput.files[0]);
+
+  fr.addEventListener("load", () => {
+    imageData = fr.result;
+    console.log(imageData)
+    // imageData = url
+
+    const prevImg = document.getElementById("img-from-local-storage")
+    prevImg.src = imageData;
+  })
+});
+
+
+
 const deletePost = (key) => {
   showPosts = showPosts.filter((_item, index) => {
     return index !== key;
@@ -129,3 +164,47 @@ const deletePost = (key) => {
 };
 
 
+
+const storePostInIndexedDB = (imageData) => {
+  // Open the database
+  const request = window.indexedDB.open("Images", 1);
+
+  // Handle successful database open
+  request.onsuccess = (event) => {
+    const db = event.target.result;
+
+    // Create a new transaction
+    const transaction = db.transaction(['posts'], 'readwrite');
+
+    // Get the object store
+    const objectStore = transaction.objectStore('posts');
+
+    // Add the base64 encoded image to the object store
+    objectStore.add({ base64Image: imageData });
+
+    // Commit the transaction
+    transaction.oncomplete = () => {
+      console.log("Transaction completed successfully");
+      db.close();
+    };
+
+    transaction.onerror = (error) => {
+      console.error("Transaction error:", error);
+    };
+  };
+
+  // Handle errors when opening the database
+  request.onerror = (error) => {
+    console.error("Error opening database:", error);
+  };
+
+  // Handle the database creation or version change event
+  request.onupgradeneeded = (event) => {
+    const db = event.target.result;
+
+    // Create an object store with the name 'posts' if it doesn't exist
+    if (!db.objectStoreNames.contains('posts')) {
+      db.createObjectStore('posts', { keyPath: 'id', autoIncrement: true });
+    }
+  };
+};

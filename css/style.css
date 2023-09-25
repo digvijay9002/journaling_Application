@@ -226,6 +226,9 @@ nav {
 }
 
 .add_post_modal {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  place-content: center;
   display: none; /* Hidden by default */
   position: absolute; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -256,6 +259,17 @@ nav {
   width: 747px;
   height: 733px;
   flex-shrink: 0;
+}
+.image__preview__div {
+  display: flex;
+  align-items: center;
+  width: 747px;
+  height: 733px;
+}
+.image__preview {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
 }
 .create__new__post__title {
   width: 100%;
@@ -329,9 +343,7 @@ nav {
   overflow: hidden;
   width: 85px;
 } */
-input[type="file"] {
-  color: transparent;
-}
+
 .submit__btn__wrapper {
   display: flex;
   justify-content: space-between;
