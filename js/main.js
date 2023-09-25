@@ -1,10 +1,12 @@
 let posts = [];
+
 var btn = document.querySelector("#add_icon_btn");
 var postBtn = document.querySelector(".post__details__form");
+
+
 let imageDiv = document.querySelector(".image__preview");
 
 
-let menuBtn = document.querySelector("#menu__icon");
 btn.addEventListener("click", () => {
   var modal = document.querySelector("#add_post_modal");
 
@@ -17,6 +19,7 @@ btn.addEventListener("click", () => {
   };
 });
 
+let menuBtn = document.querySelector("#menu__icon");
 
 menuBtn.addEventListener("click", () => {
   document.getElementById("full__menu").style.display = "flex";
@@ -205,11 +208,7 @@ fileInput.addEventListener("change", () => {
 
 
 const deletePost = (key) => {
-  showPosts = showPosts.filter((_item, index) => {
-    return index !== key;
-  });
 
-  localStorage.setItem("posts", JSON.stringify(showPosts));
   deletePostFromIndexedDB(key);
   displayPost();
 };
