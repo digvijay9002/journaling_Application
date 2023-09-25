@@ -109,8 +109,9 @@ ${showPost.date}
 
 displayPost();
 
+let fullDescription = document.getElementById("full__description");
+
 const selectPost = (key) => {
-  let fullDescription = document.getElementById("full__description");
   if (showPosts && showPosts[key]) {
     fullDescription.innerHTML = "";
     fullDescription.insertAdjacentHTML(
@@ -126,9 +127,10 @@ const selectPost = (key) => {
   </span>
   `
     );
-    getImageFromIndexedDB(key, (imageData) => {
+    getAllDataFromIndexedDB(key, post => {
       const imgElement = document.createElement("img");
-      imgElement.src = imageData;
+      console.log(post)
+      imgElement.src = post.base64Image;
       fullDescription.appendChild(imgElement);
     });
   }
@@ -138,7 +140,7 @@ const selectPost = (key) => {
 };
 
 // Function to retrieve the image data from IndexedDB
-const getImageFromIndexedDB = (postId, callback) => {
+const getAllDataFromIndexedDB = (postId, callback) => {
   const request = window.indexedDB.open("Images", 1);
 
   request.onsuccess = (event) => {
@@ -151,10 +153,9 @@ const getImageFromIndexedDB = (postId, callback) => {
     getRequest.onsuccess = () => {
       const post = getRequest.result;
       if (post) {
-        const imageData = post.base64Image;
-        callback(imageData);
+        callback(post);
       } else {
-        console.error("Post not found in IndexedDB");
+        console.error("Data not found in IndexedDB");
       }
     };
 
