@@ -339,11 +339,6 @@ nav {
   line-height: normal;
 }
 
-/* .hidden__div {
-  overflow: hidden;
-  width: 85px;
-} */
-
 .submit__btn__wrapper {
   display: flex;
   justify-content: space-between;
@@ -505,4 +500,29 @@ nav {
 .close__icon__div {
   display: flex;
   align-items: center;
+}
+
+.two_item_display {
+  grid-row: 1/2;
+  grid-column: 1/2;
+  display: grid;
+}
+
+.add_post_v2 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  place-content: center;
+  position: absolute; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
 }

@@ -12,22 +12,37 @@ class modal extends HTMLElement {
           }
   
           .add_post_modal {
-              display: none; /* Hidden by default */
-              grid-template-columns: 1fr auto;
+                display:grid;
+              grid-template-columns: 1fr 1fr;
               place-content: center;
               position: absolute; /* Stay in place */
               z-index: 1; /* Sit on top */
               left: 0;
               top: 0;
-              width: 100%; /* Full width */
-              height: 100%; /* Full height */
-              overflow: auto; /* Enable scroll if needed */
-              background-color: rgb(0, 0, 0); /* Fallback color */
-              background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+            place-items:center;
+            width: 100%;
+              height: 100%; /* Full height *
               -webkit-animation-name: fadeIn; /* Fade in the background */
               -webkit-animation-duration: 0.4s;
               animation-name: fadeIn;
               animation-duration: 0.4s;
+            }
+            
+            .modal__background{
+                     display: none; /* Hidden by default */
+                position: absolute; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0, 0, 0); /* Fallback color */
+                background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+                -webkit-animation-name: fadeIn; /* Fade in the background */
+                -webkit-animation-duration: 0.4s;
+                animation-name: fadeIn;
+                animation-duration: 0.4s;
             }
   
             .form_container {
@@ -134,9 +149,26 @@ class modal extends HTMLElement {
               width: 100%;
               height: auto;
             }
+            .
+            .hidden__div {
+            display: none
+              width: 85px;
+              visibility:hidden;
+            }
+            .#file-input {
+                display: none;
+              }
+              .modal_content{
+                grid-row:1/2;
+                grid-column:1/3;
+                display:flex;
+                margin:auto;
+                justify-content:center;
+              }
       </style>
   
           <section class='modal__section'>
+          <div class='modal__background'>
           <div class='add_post_modal' id='add_post_modal'>
             <div class='modal_content'>
               <div class='form_container'>
@@ -155,8 +187,7 @@ class modal extends HTMLElement {
   
                     <div class='submit__btn__wrapper'>
   
-                      <input type='file' class='choose__file' id='img-input' />
-  
+                      <input type='file' class='hidden__div share__button' id='img-input' accept='image/*' />
                       <button type='submit' id='post_btn' class='share__button'>
                         Share
                       </button>
@@ -168,6 +199,7 @@ class modal extends HTMLElement {
   
             <div class='image__preview__div'>
               <img id='img-from-local-storage' class='image__preview' />
+            </div>
             </div>
           </section>
   

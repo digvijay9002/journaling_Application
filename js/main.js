@@ -7,7 +7,7 @@ let imageDiv = document.querySelector(".image__preview");
 
 const customModal = document.querySelector('custom-modal');
 const shadowRoot = customModal.shadowRoot;
-const modal = shadowRoot.querySelector('#add_post_modal');
+const modal = shadowRoot.querySelector('.modal__background');
 
 const openDatabase = () => {
   const request = window.indexedDB.open("Images", 1);
@@ -138,16 +138,15 @@ const deletePostFromIndexedDB = (key) => {
 
 btn.addEventListener("click", () => {
   modal.style.display = "grid";
-
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
 })
 // Add a click event listener to the window to close the modal when clicking outside of it
+window.addEventListener("click", (event) => {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+});
 
-
+// Add an event listener to the form itself to prevent it from closing when clicking inside it
 
 const displayPost = () => {
   let addPostWrapper = document.getElementById("post__preview__wrapper");
@@ -255,8 +254,8 @@ let fullDescription = document.getElementById("full__description");
 
 const fileInput = shadowRoot.querySelector("#img-input");
 const previewImage = document.querySelector(".image__preview");
-
-
+const modal_content = shadowRoot.querySelector(".modal_content");
+const add_post_modal = shadowRoot.querySelector(".add_post_modal")
 var imageData;
 
 fileInput.addEventListener("change", () => {
@@ -270,13 +269,19 @@ fileInput.addEventListener("change", () => {
 
 
     const prevImg = shadowRoot.getElementById("img-from-local-storage")
+    modal_content.classList.add("two_item_display");
+    modal_content.classList.remove("modal_content");
+
+    prevImg.classList.add("two_item_display");
+    add_post_modal.classList.add("add_post_v2")
+
     prevImg.src = imageData;
   })
 });
 
 shadowRoot.addEventListener("formSubmit", (event) => {
   // Prevent the default form submission
-  event.preventDefault();
+
 
   const formData = event.detail.formData;
   console.log("Form submission event listener triggered.");
@@ -302,6 +307,9 @@ shadowRoot.addEventListener("formSubmit", (event) => {
     const { date, title, description } = post;
 
     storePostInIndexedDB(imageData, title, description, date);
+    modal.style.display = "none";
+    displayPost();
+
   } else {
     console.error("Title or description is missing.");
   }
