@@ -1,58 +1,152 @@
-let posts = [];
 
+let posts = [];
 var btn = document.querySelector("#add_icon_btn");
-var postBtn = document.querySelector(".post__details__form");
 
 
 let imageDiv = document.querySelector(".image__preview");
 
+const customModal = document.querySelector('custom-modal');
+const shadowRoot = customModal.shadowRoot;
+const modal = shadowRoot.querySelector('#add_post_modal');
+
+const openDatabase = () => {
+  const request = window.indexedDB.open("Images", 1);
+
+  // Handle the upgrade needed event
+  request.onupgradeneeded = (event) => {
+    const db = event.target.result;
+
+    // Create an object store with the name 'posts' if it doesn't exist
+    if (!db.objectStoreNames.contains('posts')) {
+      db.createObjectStore('posts', { keyPath: 'id', autoIncrement: true });
+    }
+  };
+
+  return new Promise((resolve, reject) => {
+    request.onsuccess = (event) => {
+      resolve(event.target.result);
+    };
+
+    request.onerror = (event) => {
+      reject(event.target.error);
+    };
+  });
+};
+
+const storePostInIndexedDB = async (imageData, title, description, date) => {
+  try {
+    const db = await openDatabase();
+    const transaction = db.transaction(['posts'], 'readwrite');
+    const objectStore = transaction.objectStore('posts');
+
+    const getRequest = objectStore.openCursor(null, 'prev');
+
+    getRequest.onsuccess = () => {
+      const cursor = getRequest.result;
+      const nextKey = cursor ? cursor.key + 1 : 0; // Calculate the next key
+
+      // Add the base64 encoded image, title, and description with the next available key
+      const requestAdd = objectStore.add({ id: nextKey, base64Image: imageData, title, description, date });
+
+      // Handle the success of adding the post
+      requestAdd.onsuccess = () => {
+        console.log("Post added successfully with key:", nextKey);
+      };
+
+      // Commit the transaction
+      transaction.oncomplete = () => {
+        db.close();
+      };
+
+      transaction.onerror = (error) => {
+        console.error("Transaction error:", error);
+      };
+    };
+  } catch (error) {
+    console.error("Error opening database:", error);
+  }
+};
+
+
+
+window.selectPost = (key) => {
+  getSelectedDataFromIndexedDB({ postId: key }, (posts) => {
+    if (posts && posts.length > key) {
+      const post = posts[key];
+      fullDescription.innerHTML = "";
+      fullDescription.insertAdjacentHTML(
+        "beforeend",
+        `
+        <span class="full__description__title">
+        ${post.title}
+        </span>
+        
+        <span class="detailed__description example">
+        ${post.description}
+        </span>
+        `
+      );
+    } else {
+      fullDescription.innerHTML = "";
+    }
+  });
+};
+
+window.deletePost = (key) => {
+
+  deletePostFromIndexedDB(key);
+  displayPost();
+};
+
+const deletePostFromIndexedDB = (key) => {
+  // Open the database
+  const request = window.indexedDB.open("Images", 1);
+
+  // Handle successful database open
+  request.onsuccess = (event) => {
+    const db = event.target.result;
+
+    // Create a new transaction
+    const transaction = db.transaction(['posts'], 'readwrite');
+
+    // Get the object store
+    const objectStore = transaction.objectStore('posts');
+
+    // Delete the entry with the specified key
+    const deleteRequest = objectStore.delete(key);
+
+    // Handle the success of deleting the post
+    deleteRequest.onsuccess = () => {
+    };
+
+    // Commit the transaction
+    transaction.oncomplete = () => {
+      db.close();
+    };
+
+    transaction.onerror = (error) => {
+      console.error("Transaction error:", error);
+    };
+  };
+
+  // Handle errors when opening the database
+  request.onerror = (error) => {
+    console.error("Error opening database:", error);
+  };
+};
+
 
 btn.addEventListener("click", () => {
-  var modal = document.querySelector("#add_post_modal");
-
   modal.style.display = "grid";
 
   window.onclick = function (event) {
     if (event.target == modal) {
       modal.style.display = "none";
     }
-  };
-});
+  }
+})
+// Add a click event listener to the window to close the modal when clicking outside of it
 
-let menuBtn = document.querySelector("#menu__icon");
-
-menuBtn.addEventListener("click", () => {
-  document.getElementById("full__menu").style.display = "flex";
-
-  window.onclick = function (event) {
-    if (event.target == document.getElementById("full__menu")) {
-      document.getElementById("full__menu").style.display = "none";
-    }
-  };
-});
-
-postBtn.addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  const postData = new FormData(event.target);
-  const post = [...postData].reduce(
-    (acc, cur) => {
-      acc[cur[0]] = cur[1];
-      return acc;
-    },
-    {
-      image: imageData,
-      date: new Date().toLocaleDateString("en-us", {
-        year: "numeric",
-        day: "numeric",
-        month: "short",
-      }),
-    }
-  );
-
-  const { date, title, description } = post;
-  storePostInIndexedDB(imageData, title, description, date);
-});
 
 
 const displayPost = () => {
@@ -155,36 +249,11 @@ const getSelectedDataFromIndexedDB = (params, callback) => {
 
 let fullDescription = document.getElementById("full__description");
 
-const selectPost = (key) => {
-  getSelectedDataFromIndexedDB({ postId: key }, (posts) => {
-    if (posts && posts.length > key) {
-      const post = posts[key];
-      fullDescription.innerHTML = "";
-      fullDescription.insertAdjacentHTML(
-        "beforeend",
-        `
-        <span class="full__description__title">
-        ${post.title}
-        </span>
-        
-        <span class="detailed__description example">
-        ${post.description}
-        </span>
-        `
-      );
-    } else {
-      fullDescription.innerHTML = "";
-    }
-  });
-};
 
 
-
-selectPost();
 // Function to retrieve the image data from IndexedDB
 
-
-const fileInput = document.querySelector("#img-input");
+const fileInput = shadowRoot.querySelector("#img-input");
 const previewImage = document.querySelector(".image__preview");
 
 
@@ -200,110 +269,57 @@ fileInput.addEventListener("change", () => {
     imageData = fr.result;
 
 
-    const prevImg = document.getElementById("img-from-local-storage")
+    const prevImg = shadowRoot.getElementById("img-from-local-storage")
     prevImg.src = imageData;
   })
 });
 
+shadowRoot.addEventListener("formSubmit", (event) => {
+  // Prevent the default form submission
+  event.preventDefault();
 
+  const formData = event.detail.formData;
+  console.log("Form submission event listener triggered.");
 
-const deletePost = (key) => {
+  // Extract title and description from formData
+  const title = formData.get("title");
+  const description = formData.get("description");
 
-  deletePostFromIndexedDB(key);
-  displayPost();
-};
-
-const deletePostFromIndexedDB = (key) => {
-  // Open the database
-  const request = window.indexedDB.open("Images", 1);
-
-  // Handle successful database open
-  request.onsuccess = (event) => {
-    const db = event.target.result;
-
-    // Create a new transaction
-    const transaction = db.transaction(['posts'], 'readwrite');
-
-    // Get the object store
-    const objectStore = transaction.objectStore('posts');
-
-    // Delete the entry with the specified key
-    const deleteRequest = objectStore.delete(key);
-
-    // Handle the success of deleting the post
-    deleteRequest.onsuccess = () => {
-    };
-
-    // Commit the transaction
-    transaction.oncomplete = () => {
-      db.close();
-    };
-
-    transaction.onerror = (error) => {
-      console.error("Transaction error:", error);
-    };
+  // Create a post object with additional data
+  const post = {
+    image: imageData,
+    date: new Date().toLocaleDateString("en-us", {
+      year: "numeric",
+      day: "numeric",
+      month: "short",
+    }),
+    title, // Use the extracted title
+    description, // Use the extracted description
   };
 
-  // Handle errors when opening the database
-  request.onerror = (error) => {
-    console.error("Error opening database:", error);
-  };
-};
+  // Ensure that title and description are defined
+  if (title && description) {
+    const { date, title, description } = post;
 
-const storePostInIndexedDB = (imageData, title, description, date) => {
-  // Open the database
-  const request = window.indexedDB.open("Images", 1);
+    storePostInIndexedDB(imageData, title, description, date);
+  } else {
+    console.error("Title or description is missing.");
+  }
+});
 
-  // Handle successful database open
-  request.onsuccess = (event) => {
-    const db = event.target.result;
 
-    // Create a new transaction
-    const transaction = db.transaction(['posts'], 'readwrite');
+let menuBtn = document.querySelector("#menu__icon");
 
-    // Get the object store
-    const objectStore = transaction.objectStore('posts');
+menuBtn.addEventListener("click", () => {
+  document.getElementById("full__menu").style.display = "flex";
 
-    // Get the current highest key in the object store
-    const getRequest = objectStore.openCursor(null, 'prev');
-
-    getRequest.onsuccess = () => {
-      const cursor = getRequest.result;
-      const nextKey = cursor ? cursor.key + 1 : 0; // Calculate the next key
-
-      // Add the base64 encoded image, title, and description with the next available key
-      const requestAdd = objectStore.add({ id: nextKey, base64Image: imageData, title, description, date });
-
-      // Handle the success of adding the post
-      requestAdd.onsuccess = (event) => {
-
-      };
-
-      // Commit the transaction
-      transaction.oncomplete = () => {
-
-        db.close();
-      };
-
-      transaction.onerror = (error) => {
-        console.error("Transaction error:", error);
-      };
-    };
-  };
-
-  // Handle errors when opening the database
-  request.onerror = (error) => {
-    console.error("Error opening database:", error);
-  };
-
-  // Handle the database creation or version change event
-  request.onupgradeneeded = (event) => {
-    const db = event.target.result;
-
-    // Create an object store with the name 'posts' if it doesn't exist
-    if (!db.objectStoreNames.contains('posts')) {
-      db.createObjectStore('posts', { keyPath: 'id', autoIncrement: true });
+  window.onclick = function (event) {
+    if (event.target == document.getElementById("full__menu")) {
+      document.getElementById("full__menu").style.display = "none";
     }
   };
-};
+});
+
+
+
 

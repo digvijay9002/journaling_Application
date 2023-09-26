@@ -13,6 +13,7 @@
     <link
       href="https://fonts.googleapis.com/css2?family=MuseoModerno&family=Sacramento&display=swap"
       rel="stylesheet">
+
   </head>
   <body>
     <section class="menu__section">
@@ -109,7 +110,7 @@
             <div class="first__container example" id="post__preview__wrapper">
             </div>
             <div class="second__container">
-              <div class="first__div__grid" onclick="selectPost()"></div>
+              <div class="first__div__grid"></div>
               <div class="second__div__grid"></div>
               <div class="third__div__grid"></div>
               <div class="full__description" id="full__description">
@@ -122,47 +123,8 @@
           </div>
         </section>
       </div>
-      <section class="modal__section">
-        <div class="add_post_modal" id="add_post_modal">
-          <div class="modal_content">
-
-            <div class="form_container">
-              <div class="create__new__post__title">
-                Create new post
-              </div>
-              <div class="post__details_container">
-                <form class="post__details__form">
-                  <input type="text" id="post__title" class="post__title"
-                    placeholder="Post title" autocomplete="off" name="title"
-                    required>
-
-                  <textarea type="text" id="post__description"
-                    class="post__description" name="description"
-                    placeholder="Share your thoughts..."></textarea>
-
-                  <div class="submit__btn__wrapper">
-
-                    <!-- <div class="hidden__div">
-                    <input type="file" id="choose_file" class="choose__file"
-                      placeholder="Choose file" title=" " name="file" />
-                  </div> -->
-                    <input type="file" id="img-input" />
-
-                    <button type="submit" id="post_btn" class="share__button">
-                      Share
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
-          <div class="image__preview__div">
-            <img id="img-from-local-storage" class="image__preview" />
-            <!-- <img src="./images/groot.jpg" class="image__preview"> -->
-          </div>
-        </section>
-        <script
-          <script src="./js/main.js"></script>
-      </body>
-    </html>
+      <script type="module" src="./js/modal.js"></script>
+      <script type="module" src="./js/main.js"></script>
+      <custom-modal></custom-modal>
+    </body>
+  </html>

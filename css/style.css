@@ -227,7 +227,7 @@ nav {
 
 .add_post_modal {
   display: none;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr auto;
   place-content: center;
   display: none; /* Hidden by default */
   position: absolute; /* Stay in place */
@@ -263,8 +263,8 @@ nav {
 .image__preview__div {
   display: flex;
   align-items: center;
-  width: 747px;
-  height: 733px;
+  max-width: 747px;
+  max-height: 733px;
 }
 .image__preview {
   object-fit: cover;
@@ -496,7 +496,12 @@ nav {
 .close__icon {
   height: 32px;
   width: 32px;
+  transition: transform 0.5s ease-in-out;
 }
+.close__icon:hover {
+  transform: rotate(180deg);
+}
+
 .close__icon__div {
   display: flex;
   align-items: center;
