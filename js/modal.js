@@ -28,7 +28,7 @@ class modal extends HTMLElement {
               animation-name: fadeIn;
               animation-duration: 0.4s;
             }
-            .
+            
             .two_item_display {
               grid-row: 1/2;
               grid-column: 1/2;
@@ -159,6 +159,7 @@ class modal extends HTMLElement {
               object-fit: cover;
               width: 100%;
               height: 100%;
+              border-radius:15px;
             }
             .
             .hidden__div {
