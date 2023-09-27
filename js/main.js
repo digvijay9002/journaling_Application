@@ -7,17 +7,7 @@ const customModal = document.querySelector('custom-modal');
 const shadowRoot = customModal.shadowRoot;
 const modal = shadowRoot.querySelector('.modal__background');
 
-// Open the IndexedDB database when the page loads
-window.addEventListener('load', () => {
-  openDatabase()
-    .then(() => {
-      // Call displayPost to display posts from IndexedDB after the database is opened
-      displayPost();
-    })
-    .catch((error) => {
-      console.error("Error opening database:", error);
-    });
-});
+
 
 const openDatabase = () => {
   const request = window.indexedDB.open("Images", 1);
@@ -169,7 +159,7 @@ const displayPost = async () => {
   const db = await openDatabase();
   const request = window.indexedDB.open("Images", 1);
 
-  
+
 
   if (!db.objectStoreNames.contains('posts')) {
     db.createObjectStore('posts', { keyPath: 'id', autoIncrement: true });

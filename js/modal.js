@@ -12,10 +12,10 @@ class modal extends HTMLElement {
           }
   
           .add_post_modal {
+            max-width:1250px;
                 display:grid;
-              grid-template-columns: 1fr 1fr;
+              grid-template-columns: 5fr 2fr;
               place-content: center;
-              position: absolute; /* Stay in place */
               z-index: 1; /* Sit on top */
               left: 0;
               top: 0;
@@ -33,7 +33,7 @@ class modal extends HTMLElement {
               grid-row: 1/2;
               grid-column: 1/2;
               display: grid;
-              justify-self: end;
+              width:100%;
             }
             
             .modal__background{
@@ -60,9 +60,10 @@ class modal extends HTMLElement {
               border-radius: 15px;
               background: #fff;
               box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.05);
-              width: 747px;
+              min-width:750px;
               height: 733px;
               flex-shrink: 0;
+              width:100%;
             }
   
             .create__new__post__title {
