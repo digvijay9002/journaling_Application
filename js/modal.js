@@ -14,7 +14,7 @@ class modal extends HTMLElement {
           .add_post_modal {
             max-width:1250px;
                 display:grid;
-              grid-template-columns: 5fr 2fr;
+              grid-template-columns: 4fr 3fr;
               place-content: center;
               z-index: 1; /* Sit on top */
               left: 0;
@@ -22,6 +22,7 @@ class modal extends HTMLElement {
             place-items:center;
             margin:auto;
               width:100%;
+           
               height: 100%; /* Full height *
               -webkit-animation-name: fadeIn; /* Fade in the background */
               -webkit-animation-duration: 0.4s;
@@ -30,8 +31,8 @@ class modal extends HTMLElement {
             }
             
             .two_item_display {
-              grid-row: 1/2;
-              grid-column: 1/2;
+              grid-row: 1/2 !important;
+              grid-column: 1/2 !important;
               display: grid;
               width:100%;
             }
@@ -61,7 +62,7 @@ class modal extends HTMLElement {
               background: #fff;
               box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.05);
               min-width:750px;
-              height: 733px;
+              height:100%;
               flex-shrink: 0;
               width:100%;
             }
@@ -140,7 +141,25 @@ class modal extends HTMLElement {
               box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
               border: none;
               padding: 8px 18px;
-            
+              color: #5a4282;
+              font-family: "Open Sans", sans-serif;
+              font-size: 18px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: normal;
+            }
+            ::file-selector-button {
+              display: none;
+            }
+            .input[type=file] {
+              color:transparent;
+            }
+            .file__button{
+              width:20%;
+              background: #fff;
+              box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12);
+              border: none;
+              padding: 8px;
               color: #5a4282;
               font-family: "Open Sans", sans-serif;
               font-size: 18px;
@@ -149,35 +168,37 @@ class modal extends HTMLElement {
               line-height: normal;
             }
             .image__preview__div {
-              display: flex;
+              display: none;
+              height:100%;
+              background: #fff;
+              box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.05);
+              padding-left:32px;
+              padding-right:32px;
+              padding-top:36px;
+              padding-bottom:76px;
               align-items: center;
               justify-self: flex-start;
               max-width: 747px;
-              height:100%;
-              max-height: 100%;
+              box-sizing:border-box;
+              border-radius:15px;
+              border-left: 1px solid rgba(0, 0, 0, 0.25);;
             }
             .image__preview {
+              display:flex;
               object-fit: cover;
               width: 100%;
               height: 100%;
               border-radius:15px;
             }
-            .
-            .hidden__div {
-            display: none
-              width: 85px;
-              visibility:hidden;
-            }
-            .#file-input {
-                display: none;
-              }
               .modal_content{
                 grid-row:1/2;
                 grid-column:1/3;
                 display:flex;
                 margin:auto;
                 justify-content:center;
-                justify-self:flex-end
+                justify-self:flex-end;
+                min-height:750px;
+                height:100%;
               }
       </style>
   
@@ -201,7 +222,8 @@ class modal extends HTMLElement {
   
                     <div class='submit__btn__wrapper'>
   
-                      <input type='file' class='hidden__div share__button' id='img-input' accept='image/*' />
+                    
+                      <input type='file' title ='Choose file'class='file__button' id='img-input' accept='image/*' />
                       <button type='submit' id='post_btn' class='share__button'>
                         Share
                       </button>

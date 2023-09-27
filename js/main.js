@@ -1,7 +1,7 @@
 let posts = [];
 var btn = document.querySelector("#add_icon_btn");
 
-let imageDiv = document.querySelector(".image__preview");
+let imageDiv = document.querySelector(".image__preview__div");
 
 const customModal = document.querySelector('custom-modal');
 const shadowRoot = customModal.shadowRoot;
@@ -277,10 +277,11 @@ fileInput.addEventListener("change", () => {
   fr.addEventListener("load", () => {
     imageData = fr.result;
 
-
     const prevImg = shadowRoot.getElementById("img-from-local-storage")
-    modal_content.classList.remove("modal_content");
     modal_content.classList.add("two_item_display");
+
+    const prevImgDiv = shadowRoot.querySelector(".image__preview__div");
+    prevImgDiv.style.display = "flex";
 
     prevImg.src = imageData;
   })

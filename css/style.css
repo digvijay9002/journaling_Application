@@ -38,6 +38,10 @@ nav {
   height: 81px;
   justify-content: center;
 }
+a {
+  text-decoration: none;
+  border: none;
+}
 .navbar__header {
   display: flex;
   background: #fff;

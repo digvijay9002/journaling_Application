@@ -1,0 +1,209 @@
+@import url("https://fonts.googleapis.com/css2?family=MuseoModerno&family=Sacramento&display=swap");
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+}
+/* ::-webkit-scrollbar {
+  height: 8px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #dbdbdb;
+  border: 1px solid rgba(102, 95, 230, 0.49);
+  border-radius: 10px;
+  margin-left: 20px;
+} */
+
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+body {
+  background-color: #fdfbff;
+}
+.main {
+  margin: 0 auto;
+  max-width: 2400px;
+}
+
+nav {
+  display: flex;
+  height: 81px;
+  justify-content: center;
+}
+a {
+  text-decoration: none;
+  border: none;
+}
+.navbar__header {
+  display: flex;
+  background: #fff;
+  box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  height: fit-content;
+  flex-shrink: 0;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 36px;
+}
+
+.full__menu {
+  display: none; /* Hidden by default */
+  position: absolute; /* Stay in place */
+  z-index: 10; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 4s;
+}
+
+.flex {
+  display: flex;
+}
+.left__side__menu {
+  width: 22em;
+  border-top-right-radius: 38px;
+  border-bottom-right-radius: 38px;
+  background: #fff;
+}
+.menu__options {
+  display: flex;
+  gap: 48px;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 30% auto;
+}
+.flex__row {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+.menu__icon__div {
+  display: flex;
+  align-items: center;
+}
+.option__items {
+  padding: 6px 0;
+  display: flex;
+  justify-content: center;
+  color: #301dad;
+  font-family: "Open Sans", sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.option__items:hover {
+  background-color: #e8e2ef;
+}
+.items {
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+.background__lines {
+  top: 72px;
+  position: absolute;
+  z-index: -1;
+  height: calc(100vh - 177px);
+}
+.background__lines__2 {
+  right: 280px;
+  position: absolute;
+  z-index: -1;
+  height: calc(100vh - 177px);
+  transform: rotate(-57.69deg);
+}
+.main__container {
+  display: flex;
+  z-index: 1;
+  margin-top: 60px;
+  margin-left: 152px;
+  margin-right: 152px;
+}
+
+.paper__asset__1 {
+  height: 304px;
+  border-top-right-radius: 22px;
+  box-shadow: 4px 2px 3px 0px rgba(0, 0, 0, 0.17);
+}
+.paper__asset__2 {
+  height: 304px;
+  box-shadow: 4px 2px 3px 0px rgba(0, 0, 0, 0.17);
+  border-top-right-radius: 22px;
+}
+
+.welcome__note {
+  /* height: 100%; */
+  max-height: 100%;
+  position: absolute;
+  z-index: 3;
+}
+.welcome__note__text__span {
+  top: 0px;
+  width: 100%;
+  padding: 28px 18px;
+  position: absolute;
+}
+.welcome__heading {
+  color: #000;
+  font-family: Sacramento;
+  font-weight: 500;
+  font-size: 26px;
+  font-style: normal;
+  line-height: normal;
+}
+
+.welcome__description {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  font-style: normal;
+  line-height: normal;
+  text-overflow: ellipsis;
+}
+
+.quote__note {
+  height: 100%;
+  /* max-height: 304px; */
+  top: 250px;
+  left: 98px;
+  position: relative;
+  z-index: 2;
+}
+.quote__note__text__span {
+  top: 80px;
+  width: 100%;
+  padding: 0px 21px;
+  position: absolute;
+}
+.quote__text {
+  color: #000;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-overflow: ellipsis;
+}
