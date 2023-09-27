@@ -1,7 +1,5 @@
-
 let posts = [];
 var btn = document.querySelector("#add_icon_btn");
-
 
 let imageDiv = document.querySelector(".image__preview");
 
@@ -9,13 +7,26 @@ const customModal = document.querySelector('custom-modal');
 const shadowRoot = customModal.shadowRoot;
 const modal = shadowRoot.querySelector('.modal__background');
 
+// Open the IndexedDB database when the page loads
+window.addEventListener('load', () => {
+  openDatabase()
+    .then(() => {
+      // Call displayPost to display posts from IndexedDB after the database is opened
+      displayPost();
+    })
+    .catch((error) => {
+      console.error("Error opening database:", error);
+    });
+});
+
 const openDatabase = () => {
   const request = window.indexedDB.open("Images", 1);
 
   // Handle the upgrade needed event
   request.onupgradeneeded = (event) => {
     const db = event.target.result;
-
+    console.log(db);
+    console.log(!db.objectStoreNames.contains('posts'));
     // Create an object store with the name 'posts' if it doesn't exist
     if (!db.objectStoreNames.contains('posts')) {
       db.createObjectStore('posts', { keyPath: 'id', autoIncrement: true });
@@ -32,6 +43,7 @@ const openDatabase = () => {
     };
   });
 };
+
 
 const storePostInIndexedDB = async (imageData, title, description, date) => {
   try {
@@ -137,23 +149,31 @@ const deletePostFromIndexedDB = (key) => {
 
 
 btn.addEventListener("click", () => {
-  modal.style.display = "grid";
+  modal.style.display = "flex";
 })
 // Add a click event listener to the window to close the modal when clicking outside of it
-window.addEventListener("click", (event) => {
-  if (event.target == modal) {
+
+shadowRoot.addEventListener("click", (event) => {
+  if (event.target.contains(shadowRoot.querySelector('.modal_content'))) {
     modal.style.display = "none";
   }
-});
+})
 
 // Add an event listener to the form itself to prevent it from closing when clicking inside it
 
-const displayPost = () => {
+const displayPost = async () => {
   let addPostWrapper = document.getElementById("post__preview__wrapper");
   addPostWrapper.innerHTML = "";
 
   // Open the IndexedDB
+  const db = await openDatabase();
   const request = window.indexedDB.open("Images", 1);
+
+  
+
+  if (!db.objectStoreNames.contains('posts')) {
+    db.createObjectStore('posts', { keyPath: 'id', autoIncrement: true });
+  }
 
   request.onsuccess = (event) => {
 
@@ -252,10 +272,10 @@ let fullDescription = document.getElementById("full__description");
 
 // Function to retrieve the image data from IndexedDB
 
-const fileInput = shadowRoot.querySelector("#img-input");
-const previewImage = document.querySelector(".image__preview");
-const modal_content = shadowRoot.querySelector(".modal_content");
-const add_post_modal = shadowRoot.querySelector(".add_post_modal")
+var fileInput = shadowRoot.querySelector("#img-input");
+var previewImage = document.querySelector(".image__preview");
+var modal_content = shadowRoot.querySelector(".modal_content");
+var add_post_modal = shadowRoot.querySelector(".add_post_modal")
 var imageData;
 
 fileInput.addEventListener("change", () => {
@@ -269,11 +289,8 @@ fileInput.addEventListener("change", () => {
 
 
     const prevImg = shadowRoot.getElementById("img-from-local-storage")
-    modal_content.classList.add("two_item_display");
     modal_content.classList.remove("modal_content");
-
-    prevImg.classList.add("two_item_display");
-    add_post_modal.classList.add("add_post_v2")
+    modal_content.classList.add("two_item_display");
 
     prevImg.src = imageData;
   })

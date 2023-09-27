@@ -1,9 +1,9 @@
 class modal extends HTMLElement {
-    constructor() {
-        super();
-        const shadowRoot = this.attachShadow({ mode: "open" });
+  constructor() {
+    super();
+    const shadowRoot = this.attachShadow({ mode: "open" });
 
-        shadowRoot.innerHTML = `
+    shadowRoot.innerHTML = `
           
       <style>
           
@@ -20,16 +20,25 @@ class modal extends HTMLElement {
               left: 0;
               top: 0;
             place-items:center;
-            width: 100%;
+            margin:auto;
+              width:100%;
               height: 100%; /* Full height *
               -webkit-animation-name: fadeIn; /* Fade in the background */
               -webkit-animation-duration: 0.4s;
               animation-name: fadeIn;
               animation-duration: 0.4s;
             }
+            .
+            .two_item_display {
+              grid-row: 1/2;
+              grid-column: 1/2;
+              display: grid;
+              justify-self: end;
+            }
             
             .modal__background{
-                     display: none; /* Hidden by default */
+                margin:auto;
+                display: none; /* Hidden by default */
                 position: absolute; /* Stay in place */
                 z-index: 1; /* Sit on top */
                 left: 0;
@@ -141,13 +150,15 @@ class modal extends HTMLElement {
             .image__preview__div {
               display: flex;
               align-items: center;
+              justify-self: flex-start;
               max-width: 747px;
-              max-height: 733px;
+              height:100%;
+              max-height: 100%;
             }
             .image__preview {
               object-fit: cover;
               width: 100%;
-              height: auto;
+              height: 100%;
             }
             .
             .hidden__div {
@@ -164,6 +175,7 @@ class modal extends HTMLElement {
                 display:flex;
                 margin:auto;
                 justify-content:center;
+                justify-self:flex-end
               }
       </style>
   
@@ -205,25 +217,25 @@ class modal extends HTMLElement {
   
           `;
 
-        const postForm = shadowRoot.querySelector("#post__details__form");
+    const postForm = shadowRoot.querySelector("#post__details__form");
 
-        postForm.addEventListener("submit", (event) => {
-            event.preventDefault();
+    postForm.addEventListener("submit", (event) => {
+      event.preventDefault();
 
-            // Create a custom event with the form data
-            const formSubmitEvent = new CustomEvent("formSubmit", {
-                detail: {
-                    formData: new FormData(postForm),
-                },
-                bubbles: true, // Allow the event to bubble up
-                composed: true,
-                target: true,// Allow the event to cross shadow DOM boundaries
-            });
+      // Create a custom event with the form data
+      const formSubmitEvent = new CustomEvent("formSubmit", {
+        detail: {
+          formData: new FormData(postForm),
+        },
+        bubbles: true, // Allow the event to bubble up
+        composed: true,
+        target: true,// Allow the event to cross shadow DOM boundaries
+      });
 
-            // Dispatch the custom event on the shadow DOM
-            postForm.dispatchEvent(formSubmitEvent);
-        });
-    };
+      // Dispatch the custom event on the shadow DOM
+      postForm.dispatchEvent(formSubmitEvent);
+    });
+  };
 }
 
 customElements.define("custom-modal", modal);
