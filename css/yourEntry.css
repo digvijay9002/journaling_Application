@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=MuseoModerno&family=Sacramento&display=swap");
+* {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+}
+/* ::-webkit-scrollbar {
+  height: 8px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #dbdbdb;
+  border: 1px solid rgba(102, 95, 230, 0.49);
+  border-radius: 10px;
+  margin-left: 20px;
+} */
+
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+body {
+  background-color: #fdfbff;
+}
+.main {
+  position: relative;
+  margin: auto;
+  max-width: 2400px;
+}
+
+nav {
+  display: flex;
+  height: 81px;
+  justify-content: center;
+}
+a {
+  text-decoration: none;
+  border: none;
+}
+.navbar__header {
+  display: flex;
+  background: #fff;
+  box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  height: fit-content;
+  flex-shrink: 0;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 36px;
+}
+
+.full__menu {
+  display: none; /* Hidden by default */
+  position: absolute; /* Stay in place */
+  z-index: 10; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 4s;
+}
+
+.flex {
+  display: flex;
+}
+.left__side__menu {
+  width: 22em;
+  border-top-right-radius: 38px;
+  border-bottom-right-radius: 38px;
+  background: #fff;
+}
+.menu__options {
+  display: flex;
+  gap: 48px;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 30% auto;
+}
+.flex__row {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+.menu__icon__div {
+  display: flex;
+  align-items: center;
+}
+.option__items {
+  padding: 6px 0;
+  display: flex;
+  justify-content: center;
+  color: #301dad;
+  font-family: "Open Sans", sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.option__items:hover {
+  background-color: #e8e2ef;
+}
+.items {
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.main__container {
+  display: flex;
+  justify-content: space-around;
+
+  padding-top: 30px;
+  padding-right: 68px;
+  width: 100%;
+}
+.last__book__container {
+  height: fit-content;
+  position: relative;
+  left: 36%;
+  z-index: 2;
+}
+.last__book__image {
+  right: 0px;
+}
+
+.middle__book__container {
+  padding-top: 148px;
+  z-index: 1;
+}
+
+.middle__book__image {
+  right: 30%;
+}
+.index__background__purple {
+  width: 70%;
+  margin-top: 28px;
+  display: grid;
+  position: absolute;
+
+  grid-template-rows: 1fr;
+  border-radius: 0px 25px 25px 0px;
+  left: 0px;
+  z-index: 3;
+  background: linear-gradient(148deg, #9e8ffd 3.42%, #c3baff 95.77%);
+  box-shadow: 0px 4px 10px 5px rgba(0, 0, 0, 0.13);
+  height: 766px;
+}
+.white__container {
+  margin: 16px 21px;
+  position: relative;
+  left: 0px;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+
+  border-radius: 0px 10px 10px 0px;
+  background: linear-gradient(
+    90deg,
+    #fff 0.12%,
+    #fff 10.51%,
+    #f9f9f9 17.79%,
+    #fbfbfb 67.68%,
+    #f6f6f6 99.9%
+  );
+  box-shadow: 5px 4px 10px 4px rgba(0, 0, 0, 0.27);
+}
+.offwhite__starting__div {
+  width: 100%;
+  background: linear-gradient(
+    270deg,
+    #fff 1.42%,
+    #eaeaea 1.43%,
+    #fff 20.72%,
+    #fff 38.72%,
+    #fff 64.23%
+  );
+}
+
+.index__container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 10% 90%;
+  padding: 80px 40px;
+}
+
+.entry__title {
+  padding-left: 86px;
+  display: grid;
+  align-items: center;
+  justify-items: start;
+  color: #301dad;
+  font-family: Sacramento;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.dateOfEntry__title {
+  display: grid;
+  align-items: center;
+  justify-items: start;
+  color: #301dad;
+  font-family: Sacramento;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+}
