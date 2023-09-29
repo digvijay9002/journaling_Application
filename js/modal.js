@@ -214,7 +214,7 @@ class modal extends HTMLElement {
                   <form class='post__details__form'  id='post__details__form'>
                     <input type='text' id='post__title' name='title' class='post__title'
                       placeholder='Post title' autocomplete='off' 
-                      required>
+                      required />
   
                     <textarea type='text' id='post__description' 
                       class='post__description' name='description'
@@ -242,9 +242,12 @@ class modal extends HTMLElement {
           `;
 
     const postForm = shadowRoot.querySelector("#post__details__form");
-
     postForm.addEventListener("submit", (event) => {
       event.preventDefault();
+      const input_title = shadowRoot.querySelector('#post__title')
+      const input_description = shadowRoot.querySelector('#post__description')
+      const input_file = shadowRoot.querySelector('.file__button')
+
 
       // Create a custom event with the form data
       const formSubmitEvent = new CustomEvent("formSubmit", {
@@ -255,7 +258,11 @@ class modal extends HTMLElement {
         composed: true,
         target: true,// Allow the event to cross shadow DOM boundaries
       });
+      input_title.value = ""
+      input_description.value = ""
+      input_file.value = ""
 
+      // const obj = formSubmitEvent;
       // Dispatch the custom event on the shadow DOM
       postForm.dispatchEvent(formSubmitEvent);
     });

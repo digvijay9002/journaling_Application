@@ -1,11 +1,11 @@
 let posts = [];
 var btn = document.querySelector("#add_icon_btn");
 
-let imageDiv = document.querySelector(".image__preview__div");
 
 const customModal = document.querySelector('custom-modal');
 const shadowRoot = customModal.shadowRoot;
 const modal = shadowRoot.querySelector('.modal__background');
+let imageDiv = shadowRoot.querySelector(".image__preview__div");
 
 
 
@@ -263,7 +263,7 @@ let fullDescription = document.getElementById("full__description");
 // Function to retrieve the image data from IndexedDB
 
 var fileInput = shadowRoot.querySelector("#img-input");
-var previewImage = document.querySelector(".image__preview");
+var previewImage = shadowRoot.querySelector(".image__preview");
 var modal_content = shadowRoot.querySelector(".modal_content");
 var add_post_modal = shadowRoot.querySelector(".add_post_modal")
 var imageData;
@@ -287,12 +287,11 @@ fileInput.addEventListener("change", () => {
   })
 });
 
-shadowRoot.addEventListener("formSubmit", (event) => {
-  // Prevent the default form submission
 
+shadowRoot.addEventListener("formSubmit", (event) => {
 
   const formData = event.detail.formData;
-  console.log("Form submission event listener triggered.");
+
 
   // Extract title and description from formData
   const title = formData.get("title");
@@ -315,12 +314,16 @@ shadowRoot.addEventListener("formSubmit", (event) => {
     const { date, title, description } = post;
 
     storePostInIndexedDB(imageData, title, description, date);
+    imageDiv.style.display = "none"
     modal.style.display = "none";
+    modal_content.classList.remove("two_item_display");
     displayPost();
+
 
   } else {
     console.error("Title or description is missing.");
   }
+
 });
 
 

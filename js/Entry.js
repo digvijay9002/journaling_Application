@@ -1,3 +1,5 @@
+
+
 let menuBtn = document.querySelector("#menu__icon");
 
 menuBtn.addEventListener("click", () => {
@@ -11,13 +13,14 @@ menuBtn.addEventListener("click", () => {
 });
 
 
+
 function getQueryParam(name) {
     const urlParams = new URLSearchParams(window.location.search);
+
     return urlParams.get(name);
 }
 
-const postId = getQueryParam('id');
-console.log("selected Post's ID:", postId);
+const postId = parseInt(getQueryParam('id'), 10)
 
 
 const getSelectedDataFromIndexedDB = (params, callback) => {
@@ -51,11 +54,12 @@ const getSelectedDataFromIndexedDB = (params, callback) => {
 
 
 let fullDescription = document.getElementById("full__description");
+let imageContainer = document.getElementById("description__container");
 
 getSelectedDataFromIndexedDB({ postId: postId }, (posts) => {
-    if (posts && posts.length > postId) {
-        const post = posts[postId];
-        fullDescription.innerHTML = "";
+    if (posts.length) {
+        const post = posts.find(({ id }) => id === postId);
+        fullDescription.innerHTML = ""; 
         fullDescription.insertAdjacentHTML(
             "beforeend",
             `
@@ -71,23 +75,62 @@ getSelectedDataFromIndexedDB({ postId: postId }, (posts) => {
         <span class="post__options" id="delete__option"}> 
             <img alt="delete_option" src="../images/delete__icon.svg" onclick="deletePost(${postId})">
         </span>
+        `   )
+
+
+        imageContainer.insertAdjacentHTML(
+            "beforeend",
+            `
+        <img src= "${post.base64Image}" class="display__image"/>
         `
         );
     } else {
         fullDescription.innerHTML = "";
+
     }
 });
 
+
 window.deletePost = (postId) => {
 
-    // deletePostFromIndexedDB(postId);
+    deletePostFromIndexedDB(postId);
     window.open("../html/yourEntry.html", "_self");
 };
 
+const deletePostFromIndexedDB = (postId) => {
+    // Open the database
+    const request = window.indexedDB.open("Images", 1);
 
+    // Handle successful database open
+    request.onsuccess = (event) => {
+        const db = event.target.result;
 
+        // Create a new transaction
+        const transaction = db.transaction(['posts'], 'readwrite');
 
+        // Get the object store
+        const objectStore = transaction.objectStore('posts');
 
+        // Delete the entry with the specified key
+        const deleteRequest = objectStore.delete(postId);
 
+        // Handle the success of deleting the post
+        deleteRequest.onsuccess = () => {
+        };
 
+        // Commit the transaction
+        transaction.oncomplete = () => {
+            db.close();
+        };
+
+        transaction.onerror = (error) => {
+            console.error("Transaction error:", error);
+        };
+    };
+
+    // Handle errors when opening the database
+    request.onerror = (error) => {
+        console.error("Error opening database:", error);
+    };
+};
 
