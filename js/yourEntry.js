@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (cursor) {
                     const key = cursor.key;
                     const showPost = cursor.value;
-                    console.log(showPost)
+
                     // Insert the post data into the HTML
 
                     indexTitle.insertAdjacentHTML(
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         `
             <div class="indexes__div" data-id=${key} >
                 <div class="star__image">
-                    <img src="../images/purple_star.svg" class="star__icon">
+                    <img src="${showPost.is_favourite ? '../images/star_filled.svg' : '../images/purple_star.svg'}" class="star__icon">
                  </div>
                <a href = "../html/Entry.html?id=${key}">
                 <div class="showPost__title__style">
@@ -106,5 +106,54 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error opening IndexedDB:", error);
         };
     };
+
+
     displayPost();
+
+    document.addEventListener("click", (event) => {
+
+        if (event.target.classList.contains("star__icon")) {
+            // Get the parent div with the data-id attribute
+            const parentDiv = event.target.closest(".indexes__div");
+            if (parentDiv) {
+                const postId = parentDiv.getAttribute("data-id");
+                const isFavourite = !event.target.src.includes("star_filled.svg");
+
+                // Update the is_favourite status in IndexedDB
+                updateFavouriteStatus(postId, isFavourite);
+
+                // Toggle the star__image src
+                event.target.src = isFavourite ? "../images/star_filled.svg" : "../images/purple_star.svg";
+            }
+        }
+    });
+    const updateFavouriteStatus = (postId, isFavourite) => {
+        const request = window.indexedDB.open("Images", 1);
+
+        request.onsuccess = async (event) => {
+            const db = event.target.result;
+            const transaction = db.transaction(["posts"], "readwrite");
+            const objectStore = transaction.objectStore("posts");
+
+            // Get the post by ID
+            const getRequest = objectStore.get(Number(postId));
+
+            getRequest.onsuccess = (event) => {
+                const post = event.target.result;
+                if (post) {
+                    // Update the is_favourite status
+                    post.is_favourite = isFavourite;
+
+                    // Put the updated post back into the object store
+                    const putRequest = objectStore.put(post);
+                    putRequest.onsuccess = () => {
+                        console.log(`Updated is_favourite status for post ${postId} to true`);
+                    };
+                }
+            };
+        };
+    };
+
+
+
 });

@@ -258,3 +258,7 @@ a {
   text-overflow: ellipsis;
   cursor: default;
 }
+.star__icon {
+  width: 18px;
+  height: 18px;
+}

@@ -231,6 +231,10 @@ a {
 .select__image {
   display: flex;
   position: relative;
+  display: flex;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 .overRide__text {
   position: absolute;
@@ -247,4 +251,6 @@ a {
 
 .position__Div {
   position: relative;
+  width: 448px;
+  height: 619px;
 }

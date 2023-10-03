@@ -14,19 +14,35 @@ document.addEventListener("DOMContentLoaded", () => {
     var imageData;
     var is_favourite = false;
     const fileInput = document.querySelector("#file-input");
+    const staticImage = document.querySelector("#image-preview");
 
     fileInput.addEventListener("change", () => {
-        const fr = new FileReader();
-        fr.readAsDataURL(fileInput.files[0]);
-        fr.addEventListener("load", () => {
-            imageData = fr.result;
-        })
-    });
+        const file = fileInput.files[0];
 
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                // Update the src attribute of the image preview with the selected image data URL
+                staticImage.src = event.target.result;
+                // Show the static image and hide the image preview
+                staticImage.style.display = "block";
+                imagePreview.style.display = "none";
+            };
+
+            // Read the selected file as a data URL
+            reader.readAsDataURL(file);
+        } else {
+            // Clear the image preview if no file is selected
+            staticImage.style.display = "none";
+            imagePreview.style.display = "block";
+        }
+    });
 
     var postBtn = document.querySelector(".post__details__form");
     postBtn.addEventListener("submit", (event) => {
         event.preventDefault();
+
         const postData = new FormData(event.target);
         const post = [...postData].reduce(
             (acc, cur) => {
@@ -69,6 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Commit the transaction
                 transaction.oncomplete = () => {
                     db.close();
+                    window.alert("Data Added Successfully");
+                    window.open("../index.html", "_self");
                 };
                 transaction.onerror = (error) => {
                     console.error("Transaction error:", error);
