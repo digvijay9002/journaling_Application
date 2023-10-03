@@ -35,7 +35,7 @@ const openDatabase = () => {
 };
 
 
-const storePostInIndexedDB = async (imageData, title, description, date) => {
+const storePostInIndexedDB = async (imageData, title, description, date, is_favourite) => {
   try {
     const db = await openDatabase();
     const transaction = db.transaction(['posts'], 'readwrite');
@@ -48,7 +48,7 @@ const storePostInIndexedDB = async (imageData, title, description, date) => {
       const nextKey = cursor ? cursor.key + 1 : 0; // Calculate the next key
 
       // Add the base64 encoded image, title, and description with the next available key
-      const requestAdd = objectStore.add({ id: nextKey, base64Image: imageData, title, description, date });
+      const requestAdd = objectStore.add({ id: nextKey, base64Image: imageData, title, description, date, is_favourite });
 
       // Handle the success of adding the post
       requestAdd.onsuccess = () => {
@@ -292,7 +292,7 @@ shadowRoot.addEventListener("formSubmit", (event) => {
 
   const formData = event.detail.formData;
 
-
+  var is_favourite = false;
   // Extract title and description from formData
   const title = formData.get("title");
   const description = formData.get("description");
@@ -313,7 +313,7 @@ shadowRoot.addEventListener("formSubmit", (event) => {
   if (title && description) {
     const { date, title, description } = post;
 
-    storePostInIndexedDB(imageData, title, description, date);
+    storePostInIndexedDB(imageData, title, description, date, is_favourite);
     imageDiv.style.display = "none"
     modal.style.display = "none";
     modal_content.classList.remove("two_item_display");

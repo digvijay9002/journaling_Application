@@ -3,8 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Eduimonia -Entry</title>
-        <link rel="stylesheet" href="../css/Entry.css" />
+        <title>New Entry -Eduimonia</title>
+        <link rel="stylesheet" href="../css/newEntry.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -94,17 +94,58 @@
                     <img src="../images/background_lines.svg"
                         class="background__lines" />
                 </div>
+                <form class='post__details__form'
+                    id='post__details__form'>
+                    <div class="main__container">
 
-                <div class="main__container">
-                    <div class="description__container">
-                        <div class="full__description" id="full__description"></div>
-                    </div>
-                    <div class="image__container" id="description__container">
+                        <div class="newEntry__container">
 
+                            <div class="newEntry__text__div"
+                                id="full__description">
+                                <div class="input__title__container">
+                                    <input type='text' id='post__title'
+                                        name='title'
+                                        class='post__title'
+                                        placeholder='Enter Title'
+                                        autocomplete='off'
+                                        required />
+
+                                    <button type="submit" id="post_btn"
+                                        value="save"
+                                        class="save__button">Save</button>
+                                </div>
+                                <div>
+                                    <textarea type='text' id='post__description'
+                                        class='post__description'
+                                        name='description'
+                                        placeholder='Start Writing...'></textarea>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="image__container"
+                            id="description__container">
+
+                            <div class="select__image__container">
+                                <label for="file-input">
+                                    <div class="position__Div">
+                                        <img src="../images/select_image.svg"
+                                            class="select__image" />
+
+                                        <span class="overRide__text">Record your
+                                            day
+                                            a little better by adding a picture!</span>
+                                    </div>
+                                </label>
+
+                                <input id="file-input" type="file" />
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <script src="../js/Entry.js"></script>
-    </body>
-</html>
+
+            </section>
+            <script src="../js/newEntry.js" defer></script>
+        </body>
+    </html>

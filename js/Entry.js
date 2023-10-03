@@ -59,7 +59,7 @@ let imageContainer = document.getElementById("description__container");
 getSelectedDataFromIndexedDB({ postId: postId }, (posts) => {
     if (posts.length) {
         const post = posts.find(({ id }) => id === postId);
-        fullDescription.innerHTML = ""; 
+        fullDescription.innerHTML = "";
         fullDescription.insertAdjacentHTML(
             "beforeend",
             `
@@ -77,13 +77,14 @@ getSelectedDataFromIndexedDB({ postId: postId }, (posts) => {
         </span>
         `   )
 
-
-        imageContainer.insertAdjacentHTML(
-            "beforeend",
-            `
+        if (post.base64Image !== undefined) {
+            imageContainer.insertAdjacentHTML(
+                "beforeend",
+                `
         <img src= "${post.base64Image}" class="display__image"/>
         `
-        );
+            );
+        }
     } else {
         fullDescription.innerHTML = "";
 

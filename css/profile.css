@@ -82,11 +82,11 @@ a {
 }
 .menu__options {
   display: flex;
-  gap: 48px;
+  gap: 28px;
   align-content: center;
   justify-content: center;
   flex-direction: column;
-  margin: 30% auto;
+  margin: 105px auto;
 }
 .flex__row {
   display: flex;
@@ -99,7 +99,7 @@ a {
   align-items: center;
 }
 .option__items {
-  padding: 6px 0;
+  padding: 12px 0;
   display: flex;
   justify-content: center;
   color: #301dad;

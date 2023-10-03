@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=MuseoModerno&family=Sacramento&display=swap");
-
 * {
   margin: 0;
   box-sizing: border-box;
@@ -30,7 +29,6 @@ body {
   background-color: #fdfbff;
 }
 .main {
-  overflow: hidden;
   margin: 0 auto;
   max-width: 2400px;
 }
@@ -122,182 +120,131 @@ a {
 .pointer {
   cursor: pointer;
 }
-.background__image__div_1 {
-  position: relative;
-}
-.background__image__div_2 {
-  position: relative;
-}
-.backgorund__lines__container {
+.main__container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  width: 100%;
-  position: relative;
+  column-gap: 24px;
+  grid-template-columns: 1.5fr 1fr;
 }
 .background__lines {
-  top: 0px;
   position: absolute;
-  height: calc(100vh - 177px);
+  z-index: -1;
+  height: calc(100vh - 230px);
 }
-.background__lines__2 {
+.newEntry__container {
   width: 100%;
-  top: 100px;
-  right: 60px;
-  position: absolute;
-  height: calc(100vh - 177px);
-  transform: rotate(-57.69deg);
 }
-.main__container {
-  justify-content: center;
-  position: relative;
-  height: 100vh;
+.newEntry__text__div {
   display: flex;
-  z-index: 1;
-  margin-top: 60px;
-}
-
-.paper__asset__1 {
-  height: 304px;
-  border-top-right-radius: 22px;
-  box-shadow: 4px 2px 3px 0px rgba(0, 0, 0, 0.17);
-}
-.paper__asset__2 {
-  height: 304px;
-  box-shadow: 4px 2px 3px 0px rgba(0, 0, 0, 0.17);
-  border-top-right-radius: 22px;
-}
-
-.welcome__note {
-  /* height: 100%; */
-  max-height: 100%;
-  position: absolute;
-  z-index: 3;
-}
-.welcome__note__text__span {
-  top: 0px;
-  width: 100%;
-  padding: 28px 18px;
-  position: absolute;
-}
-.welcome__heading {
-  color: #000;
-  font-family: Sacramento;
-  font-weight: 500;
-  font-size: 26px;
-  font-style: normal;
-  line-height: normal;
-  cursor: default;
-}
-
-.welcome__description {
-  color: #000;
+  color: #5a4282;
   font-family: "Open Sans", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
+  font-size: 17px;
   font-style: normal;
+  font-weight: 300;
   line-height: normal;
-  text-overflow: ellipsis;
-  cursor: default;
-}
-
-.quote__note {
-  height: fit-content;
-  top: 250px;
-  left: 98px;
-  position: relative;
-  z-index: 2;
-}
-.quote__note__text__span {
-  top: 80px;
-  width: 100%;
-  padding: 0px 21px;
-  position: absolute;
-  cursor: default;
-}
-.quote__text {
-  color: #000;
-  font-family: "Open Sans", sans-serif;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  text-overflow: ellipsis;
-}
-.user__diary__container {
-  z-index: 6;
-  display: flex;
-  height: max-content;
-}
-.pen__container {
-  position: relative;
-  height: 100%;
-  z-index: 8;
-  height: fit-content;
-}
-.pen__image {
-  position: relative;
-  top: 50px;
-  flex-shrink: 0;
-  z-index: 8;
-}
-.book__container {
-  position: relative;
-  left: -80px;
-  height: fit-content;
-}
-.book__image {
-  position: relative;
-}
-.user__name__onDiary {
-  position: absolute;
-  width: 100%;
-  bottom: 160px;
-  display: flex;
-  justify-content: center;
-  cursor: default;
-  color: #fff;
-  font-family: Sacramento;
-  font-size: 40px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-}
-.diary__options__container {
-  display: flex;
-  gap: 44px;
+  margin-top: 34px;
+  margin-left: 114px;
+  margin-bottom: 34px;
   flex-direction: column;
+  height: 100vh;
+  max-height: 733px;
+  overflow: hidden;
+  padding: 56px 66px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 5px 4px 10px 4px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  word-break: break-word;
 }
-.diary__options__background_1 {
+.image__container {
+  padding-top: 64px;
   display: flex;
-  align-items: center;
-  top: 64px;
   width: fit-content;
-  left: -100px;
-  position: relative;
-  background: #301dad;
-  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.05);
-  padding: 11px 13px;
+  height: fit-content;
+  flex-shrink: 0;
 }
-.diary__options__background_2 {
+.input__title__container {
   display: flex;
-  align-items: center;
-  top: 64px;
-  width: 100%;
-  left: -100px;
-  position: relative;
-  background: #301dad;
-  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.05);
-  padding: 11px 13px;
 }
-.starred__text {
-  color: #f5f5f5;
+.post__title {
+  outline: none;
+  color: #5a4282;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  width: 80%;
+  height: 42px;
+  /* box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12); */
+  border: none;
+}
+
+.post__title::placeholder {
+  color: #301dad;
+  font-family: Sacramento;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.save__button {
+  width: 132px;
+  height: 100%;
+  border-radius: 4px;
+  background: #301dad;
+  color: #fff;
   font-family: "Open Sans", sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 300;
   line-height: normal;
-  padding: 0px 5px;
 }
-.favourite__icon {
-  color: gold;
+.post__description {
+  word-break: break-word;
+  outline: none;
+  color: #5a4282 !important;
+  margin-top: 30px;
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 20px;
+  width: 100%;
+  height: 100%;
+  /* box-shadow: 1px 1px 4px 0px rgba(0, 0, 0, 0.12); */
+  border: none;
+  resize: none;
+}
+.post__description::placeholder {
+  color: #5a4282;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.select__image__container > input {
+  display: none;
+}
+
+.select__image {
+  display: flex;
+  position: relative;
+}
+.overRide__text {
+  position: absolute;
+  color: #5a4282;
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  bottom: 42px;
+  padding: 0px 40px;
+}
+
+.position__Div {
+  position: relative;
 }
